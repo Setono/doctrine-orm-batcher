@@ -2,7 +2,12 @@
 
 namespace Setono\DoctrineORMBatcher\Batcher;
 
+use Setono\DoctrineORMBatcher\Batch\Batch;
+
 interface IdBatcherInterface
 {
-    public function getBatches(): iterable;
+    /**
+     * @return iterable|Batch[]
+     */
+    public function getBatches(int $batchSize = 100): iterable;
 }

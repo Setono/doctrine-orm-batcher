@@ -31,7 +31,7 @@ abstract class EntityManagerAwareTestCase extends TestCase
         $schemaTool->dropDatabase();
         $schemaTool->updateSchema($metadata);
 
-        for($i = 10; $i < 490; $i++) {
+        for($i = 10; $i <= 52; $i++) {
             $entity = new ValidEntity($i);
             $this->entityManager->persist($entity);
         }

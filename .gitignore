@@ -3,3 +3,4 @@
 
 /phpspec.yml
 /.phpunit.result.cache
+/tests/db.sqlite

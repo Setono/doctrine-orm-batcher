@@ -22,5 +22,23 @@
         "psr-4": {
             "Tests\\Setono\\DoctrineORMBatcher\\": "tests/"
         }
+    },
+    "require-dev": {
+        "localheinz/composer-normalize": "^1.2",
+        "phpstan/phpstan": "^0.11.8",
+        "phpstan/phpstan-strict-rules": "^0.11.1",
+        "symplify/easy-coding-standard": "^6.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon -l max src/",
+        "check-style": "vendor/bin/ecs check --ansi src/",
+        "fix-style": "vendor/bin/ecs check --ansi src/ --fix",
+        "phpunit": "vendor/bin/phpunit",
+        "test": [
+            "@phpunit"
+        ]
     }
 }

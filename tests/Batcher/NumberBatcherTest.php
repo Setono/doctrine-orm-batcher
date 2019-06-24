@@ -3,6 +3,7 @@
 namespace Tests\Setono\DoctrineORMBatcher\Badger;
 
 use PHPUnit\Framework\TestCase;
+use Setono\DoctrineORMBatcher\Batch\Batch;
 use Setono\DoctrineORMBatcher\Batcher\NumberBatcher;
 
 final class NumberBatcherTest extends TestCase
@@ -14,15 +15,21 @@ final class NumberBatcherTest extends TestCase
     {
         $batcher = new NumberBatcher();
 
+        /** @var Batch[] $expected */
         $expected = [
-            [12, 21],
-            [22, 31],
-            [32, 41],
-            [42, 50],
+            new Batch(12, 21),
+            new Batch(22, 31),
+            new Batch(32, 41),
+            new Batch(42, 50),
         ];
 
-        $actual = iterator_to_array($batcher->getBatches(12, 50, 10));
+        $batches = $batcher->getBatches(12, 50, 10);
 
-        $this->assertSame($expected, $actual);
+        foreach ($batches as $idx => $batch) {
+            $this->assertSame($expected[$idx]->getLowerBound(), $batch->getLowerBound());
+            $this->assertSame($expected[$idx]->getUpperBound(), $batch->getUpperBound());
+        }
+
+        $this->assertSame(3, $idx);
     }
 }
