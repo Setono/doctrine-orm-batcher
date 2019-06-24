@@ -1,6 +1,6 @@
 <?php
 
-namespace Setono\DoctrineORMBatch\Batcher;
+namespace Setono\DoctrineORMBatcher\Batcher;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;

@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatch;
+namespace Tests\Setono\DoctrineORMBatcher;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use PHPUnit\Framework\TestCase;
-use Tests\Setono\DoctrineORMBatch\Stub\Entity\ValidEntity;
+use Tests\Setono\DoctrineORMBatcher\Stub\Entity\ValidEntity;
 
 abstract class EntityManagerAwareTestCase extends TestCase
 {

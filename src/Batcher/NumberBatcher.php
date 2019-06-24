@@ -1,6 +1,6 @@
 <?php
 
-namespace Setono\DoctrineORMBatch\Batcher;
+namespace Setono\DoctrineORMBatcher\Batcher;
 
 final class NumberBatcher implements NumberBatcherInterface
 {

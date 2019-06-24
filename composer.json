@@ -1,5 +1,5 @@
 {
-    "name": "setono/doctrine-orm-batch",
+    "name": "setono/doctrine-orm-batcher",
     "description": "A library for processing large collections",
     "type": "library",
     "license": "MIT",
@@ -15,12 +15,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Setono\\DoctrineORMBatch\\": "src/"
+            "Setono\\DoctrineORMBatcher\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Setono\\DoctrineORMBatch\\": "tests/"
+            "Tests\\Setono\\DoctrineORMBatcher\\": "tests/"
         }
     }
 }

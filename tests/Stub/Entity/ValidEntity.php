@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatch\Stub\Entity;
+namespace Tests\Setono\DoctrineORMBatcher\Stub\Entity;
 
 /**
  * @Entity

@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatch;
+namespace Tests\Setono\DoctrineORMBatcher;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Setono\DoctrineORMBatch\IdBatcher;
-use Tests\Setono\DoctrineORMBatch\Stub\Entity\ValidEntity;
+use Setono\DoctrineORMBatcher\Batcher\IdBatcher;
 
 final class IdBatchTest extends EntityManagerAwareTestCase
 {

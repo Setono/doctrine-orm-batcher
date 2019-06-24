@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatch\Badger;
+namespace Tests\Setono\DoctrineORMBatcher\Badger;
 
 use PHPUnit\Framework\TestCase;
-use Setono\DoctrineORMBatch\Batcher\NumberBatcher;
+use Setono\DoctrineORMBatcher\Batcher\NumberBatcher;
 
 final class NumberBatcherTest extends TestCase
 {
