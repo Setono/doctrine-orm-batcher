@@ -5,3 +5,4 @@ imports:
 services:
     PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer: ~
     PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer: ~
+    PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~

@@ -2,17 +2,20 @@
 
 namespace Tests\Setono\DoctrineORMBatcher;
 
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use PHPUnit\Framework\TestCase;
-use Tests\Setono\DoctrineORMBatcher\Stub\Entity\ValidEntity;
 
 abstract class EntityManagerAwareTestCase extends TestCase
 {
     /** @var EntityManagerInterface */
     protected $entityManager;
+
+    /** @var ORMPurger */
+    protected $purger;
 
     public function setUp(): void
     {
@@ -28,15 +31,9 @@ abstract class EntityManagerAwareTestCase extends TestCase
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
 
         $schemaTool = new SchemaTool($this->entityManager);
-        $schemaTool->dropDatabase();
         $schemaTool->updateSchema($metadata);
 
-        for($i = 10; $i <= 52; $i++) {
-            $entity = new ValidEntity($i);
-            $this->entityManager->persist($entity);
-        }
-
-        $this->entityManager->flush();
-
+        $this->purger = new ORMPurger($this->entityManager);
+        $this->purger->purge();
     }
 }

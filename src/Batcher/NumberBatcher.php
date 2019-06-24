@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Setono\DoctrineORMBatcher\Batcher;
 
 use Setono\DoctrineORMBatcher\Batch\Batch;

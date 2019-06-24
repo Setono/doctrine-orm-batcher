@@ -15,9 +15,15 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
      */
     public function it_works(): void
     {
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
-        $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
-        $idBatch = new NaiveIdBatcher($managerRegistry, ValidEntity::class, new NumberBatcher());
+        $this->purger->purge();
+        for($i = 10; $i <= 52; $i++) {
+            $entity = new ValidEntity($i);
+            $this->entityManager->persist($entity);
+        }
+
+        $this->entityManager->flush();
+
+        $batcher = $this->getBatcher();
 
         /** @var Batch[] $expected */
         $expected = [
@@ -28,7 +34,7 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
             new Batch(50, 52),
         ];
 
-        $batches = $idBatch->getBatches(10);
+        $batches = $batcher->getBatches(10);
 
         foreach ($batches as $idx => $batch) {
             $this->assertSame($expected[$idx]->getLowerBound(), $batch->getLowerBound());
@@ -36,5 +42,39 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
         }
 
         $this->assertSame(4, $idx);
+    }
+
+    /**
+     * @test
+     */
+    public function it_is_not_sparse(): void
+    {
+        $this->purger->purge();
+
+        for($i = 10; $i <= 15; $i++) {
+            $entity = new ValidEntity($i);
+            $this->entityManager->persist($entity);
+        }
+
+        for($i = 18; $i <= 52; $i++) {
+            $entity = new ValidEntity($i);
+            $this->entityManager->persist($entity);
+        }
+
+        $this->entityManager->flush();
+
+        $batcher = $this->getBatcher();
+
+        $sparseness = $batcher->getSparseness();
+
+        $this->assertSame(5, $sparseness);
+    }
+
+    private function getBatcher(): NaiveIdBatcher
+    {
+        $managerRegistry = $this->createMock(ManagerRegistry::class);
+        $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
+
+        return new NaiveIdBatcher($managerRegistry, ValidEntity::class, new NumberBatcher());
     }
 }
