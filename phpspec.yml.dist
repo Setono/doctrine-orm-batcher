@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: Setono\DoctrineORMBatch
+        psr4_prefix: Setono\DoctrineORMBatch

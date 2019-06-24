@@ -1,0 +1,26 @@
+{
+    "name": "setono/doctrine-orm-batch",
+    "description": "A library for processing large collections",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joachim Løvgaard",
+            "email": "joachim@loevgaard.dk"
+        }
+    ],
+    "require": {
+        "doctrine/orm": "^2.6",
+        "phpunit/phpunit": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Setono\\DoctrineORMBatch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Setono\\DoctrineORMBatch\\": "tests/"
+        }
+    }
+}
