@@ -7,3 +7,7 @@ Well, because MySQL is [not very good with LIMIT and OFFSET](https://www.eversql
 when the tables become too large. As for Doctrine batch processing capabilities the difference is that this 
 library is very opinionated. It will work very well in a message based architecture where large processing will 
 likely be done in an asynchronous way.
+
+## Different batcher ;-)
+
+[![Batcher, Batcher](https://img.youtube.com/vi/NL6CDFn2i3I/0.jpg)](https://www.youtube.com/watch?v=NL6CDFn2i3I)
