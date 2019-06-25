@@ -1,4 +1,4 @@
-# Doctrine ORM Batch library
+# Doctrine ORM Batcher library
 Use this library when you need to process large amounts of entities and maybe in an async way ;)
 
 Why do we need this library? Why not just use a paginator library like [Pagerfanta](https://github.com/whiteoctober/Pagerfanta) or normal [batch processing in Doctrine](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/batch-processing.html)?
