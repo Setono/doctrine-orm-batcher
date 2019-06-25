@@ -37,8 +37,8 @@
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse -c phpstan.neon -l max src/",
-        "check-style": "vendor/bin/ecs check --ansi src/",
-        "fix-style": "vendor/bin/ecs check --ansi src/ --fix",
+        "check-style": "vendor/bin/ecs check --ansi src/ tests/",
+        "fix-style": "vendor/bin/ecs check --ansi src/ tests/ --fix",
         "phpunit": "vendor/bin/phpunit",
         "test": [
             "@phpunit"

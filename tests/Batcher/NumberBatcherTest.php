@@ -1,6 +1,8 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatcher\Badger;
+declare(strict_types=1);
+
+namespace Tests\Setono\DoctrineORMBatcher\Batcher;
 
 use PHPUnit\Framework\TestCase;
 use Setono\DoctrineORMBatcher\Batch\Batch;

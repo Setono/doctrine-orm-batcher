@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Setono\DoctrineORMBatcher;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -21,11 +23,11 @@ abstract class EntityManagerAwareTestCase extends TestCase
     {
         parent::setUp();
 
-        $config = Setup::createAnnotationMetadataConfiguration([__DIR__.'/Stub/Entity'], true);
+        $config = Setup::createAnnotationMetadataConfiguration([__DIR__.'/Entity'], true);
 
         $this->entityManager = EntityManager::create([
             'driver' => 'pdo_sqlite',
-            'path' => __DIR__ . '/db.sqlite',
+            'path' => __DIR__.'/db.sqlite',
         ], $config);
 
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();

@@ -1,12 +1,15 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatcher;
+declare(strict_types=1);
+
+namespace Tests\Setono\DoctrineORMBatcher\Batcher;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Setono\DoctrineORMBatcher\Batch\Batch;
 use Setono\DoctrineORMBatcher\Batcher\NaiveIdBatcher;
 use Setono\DoctrineORMBatcher\Batcher\NumberBatcher;
-use Tests\Setono\DoctrineORMBatcher\Stub\Entity\ValidEntity;
+use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
+use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
 final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
 {
@@ -16,8 +19,8 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
     public function it_works(): void
     {
         $this->purger->purge();
-        for($i = 10; $i <= 52; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 10; $i <= 52; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
@@ -51,13 +54,13 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
     {
         $this->purger->purge();
 
-        for($i = 10; $i <= 15; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 10; $i <= 15; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
-        for($i = 18; $i <= 52; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 18; $i <= 52; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
@@ -75,6 +78,6 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
         $managerRegistry = $this->createMock(ManagerRegistry::class);
         $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
 
-        return new NaiveIdBatcher($managerRegistry, ValidEntity::class, new NumberBatcher());
+        return new NaiveIdBatcher($managerRegistry, Entity::class, new NumberBatcher());
     }
 }

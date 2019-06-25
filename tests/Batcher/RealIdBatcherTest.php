@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatcher;
+declare(strict_types=1);
+
+namespace Tests\Setono\DoctrineORMBatcher\Batcher;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Setono\DoctrineORMBatcher\Batch\Batch;
-use Setono\DoctrineORMBatcher\Batcher\NaiveIdBatcher;
-use Setono\DoctrineORMBatcher\Batcher\NumberBatcher;
 use Setono\DoctrineORMBatcher\Batcher\RealIdBatcher;
-use Tests\Setono\DoctrineORMBatcher\Stub\Entity\ValidEntity;
+use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
+use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
 final class RealIdBatcherTest extends EntityManagerAwareTestCase
 {
@@ -18,23 +19,23 @@ final class RealIdBatcherTest extends EntityManagerAwareTestCase
     {
         $this->purger->purge();
 
-        for($i = 10; $i <= 15; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 10; $i <= 15; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
-        for($i = 18; $i <= 28; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 18; $i <= 28; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
-        for($i = 35; $i <= 50; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 35; $i <= 50; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
-        for($i = 78; $i <= 100; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 78; $i <= 100; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
@@ -42,7 +43,7 @@ final class RealIdBatcherTest extends EntityManagerAwareTestCase
 
         $managerRegistry = $this->createMock(ManagerRegistry::class);
         $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
-        $idBatch = new RealIdBatcher($managerRegistry, ValidEntity::class);
+        $idBatch = new RealIdBatcher($managerRegistry, Entity::class);
 
         /** @var Batch[] $expected */
         $expected = [
@@ -71,23 +72,23 @@ final class RealIdBatcherTest extends EntityManagerAwareTestCase
     {
         $this->purger->purge();
 
-        for($i = 10; $i <= 15; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 10; $i <= 15; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
-        for($i = 18; $i <= 28; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 18; $i <= 28; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
-        for($i = 35; $i <= 50; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 35; $i <= 50; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
-        for($i = 78; $i <= 105; $i++) {
-            $entity = new ValidEntity($i);
+        for ($i = 78; $i <= 105; ++$i) {
+            $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
@@ -95,7 +96,7 @@ final class RealIdBatcherTest extends EntityManagerAwareTestCase
 
         $managerRegistry = $this->createMock(ManagerRegistry::class);
         $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
-        $idBatch = new RealIdBatcher($managerRegistry, ValidEntity::class);
+        $idBatch = new RealIdBatcher($managerRegistry, Entity::class);
 
         /** @var Batch[] $expected */
         $expected = [

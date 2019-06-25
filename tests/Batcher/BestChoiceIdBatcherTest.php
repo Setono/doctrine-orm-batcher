@@ -1,16 +1,14 @@
 <?php
 
-namespace Tests\Setono\DoctrineORMBatcher;
+declare(strict_types=1);
+
+namespace Tests\Setono\DoctrineORMBatcher\Batcher;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Setono\DoctrineORMBatcher\Batch\Batch;
 use Setono\DoctrineORMBatcher\Batcher\BestChoiceIdBatcher;
-use Setono\DoctrineORMBatcher\Batcher\NaiveIdBatcher;
 use Setono\DoctrineORMBatcher\Batcher\NaiveIdBatcherInterface;
-use Setono\DoctrineORMBatcher\Batcher\NumberBatcher;
-use Setono\DoctrineORMBatcher\Batcher\RealIdBatcher;
 use Setono\DoctrineORMBatcher\Batcher\RealIdBatcherInterface;
-use Tests\Setono\DoctrineORMBatcher\Stub\Entity\ValidEntity;
+use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
 final class BestChoiceIdBatcherTest extends EntityManagerAwareTestCase
 {
