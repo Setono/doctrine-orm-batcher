@@ -17,7 +17,7 @@ final class BestChoiceIdBatcher implements IdBatcherInterface
     /** @var int */
     private $sparsenessThreshold;
 
-    public function __construct(NaiveIdBatcherInterface $naiveIdBatcher, RealIdBatcherInterface $realIdBatcher, int $sparsenessThreshold = 10)
+    public function __construct(NaiveIdBatcherInterface $naiveIdBatcher, RealIdBatcherInterface $realIdBatcher, int $sparsenessThreshold = 5)
     {
         $this->naiveIdBatcher = $naiveIdBatcher;
         $this->realIdBatcher = $realIdBatcher;
