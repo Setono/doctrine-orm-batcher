@@ -12,7 +12,10 @@ use Setono\DoctrineORMBatcher\Batch\Batch;
 interface BatchableInterface
 {
     /**
+     * The callable is passed an instance of the query builder as the first param and the alias as the second
+     * Use this callable to filter batches.
+     *
      * @return object[]
      */
-    public function getBatch(Batch $batch): array;
+    public function getBatch(Batch $batch, callable $queryBuilderUpdater = null): array;
 }

@@ -33,19 +33,24 @@ trait BatchableTrait
      * @throws MappingException
      * @throws StringsException
      */
-    public function getBatch(Batch $batch): array
+    public function getBatch(Batch $batch, callable $queryBuilderUpdater = null): array
     {
         $identifier = $this->_class->getSingleIdentifierFieldName();
+        $alias = 'o';
 
-        $qb = $this->createQueryBuilder('o');
+        $qb = $this->createQueryBuilder($alias);
         $qb
-            ->andWhere(sprintf('o.%s >= :lowerBound', $identifier))
-            ->andWhere(sprintf('o.%s <= :upperBound', $identifier))
+            ->andWhere(sprintf('%s.%s >= :lowerBound', $alias, $identifier))
+            ->andWhere(sprintf('%s.%s <= :upperBound', $alias, $identifier))
             ->setParameters([
                 'lowerBound' => $batch->getLowerBound(),
                 'upperBound' => $batch->getUpperBound(),
             ])
         ;
+
+        if (null !== $queryBuilderUpdater) {
+            $queryBuilderUpdater($qb, $alias);
+        }
 
         return $qb->getQuery()->getResult();
     }
