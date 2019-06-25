@@ -9,9 +9,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\MappingException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
-use RuntimeException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
+use Setono\DoctrineORMBatcher\Exception\NoManagerException;
+use Setono\DoctrineORMBatcher\Exception\WrongFieldTypeException;
 
 abstract class IdBatcher implements IdBatcherInterface
 {
@@ -51,8 +52,7 @@ abstract class IdBatcher implements IdBatcherInterface
             $identifier = $metaData->getSingleIdentifierFieldName();
 
             if ('integer' !== $metaData->getTypeOfField($identifier)) {
-                throw new RuntimeException(sprintf('The %s only works with identifiers that are integers',
-                    self::class));
+                throw new WrongFieldTypeException($identifier, $this->class, 'integer');
             }
 
             $this->identifier = $identifier;
@@ -61,6 +61,10 @@ abstract class IdBatcher implements IdBatcherInterface
         return $this->identifier;
     }
 
+    /**
+     * @throws NoManagerException
+     * @throws StringsException
+     */
     protected function createQueryBuilder(string $select, string $alias = 'o'): QueryBuilder
     {
         $manager = $this->getManager();
@@ -71,6 +75,10 @@ abstract class IdBatcher implements IdBatcherInterface
         return $qb;
     }
 
+    /**
+     * @throws NoManagerException
+     * @throws StringsException
+     */
     private function getManager(): EntityManagerInterface
     {
         if (null === $this->manager) {
@@ -78,7 +86,7 @@ abstract class IdBatcher implements IdBatcherInterface
             $manager = $this->managerRegistry->getManagerForClass($this->class);
 
             if (!$manager instanceof EntityManagerInterface) {
-                throw new RuntimeException('This library only works with the doctrine/orm library'); // todo better exception
+                throw new NoManagerException($this->class);
             }
 
             $this->manager = $manager;

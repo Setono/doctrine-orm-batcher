@@ -57,6 +57,7 @@ final class NaiveIdBatcher extends IdBatcher implements NaiveIdBatcherInterface
 
     /**
      * @throws NonUniqueResultException
+     * @throws StringsException
      */
     private function initCount(): void
     {

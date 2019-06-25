@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Setono\DoctrineORMBatcher\Batch;
+namespace Setono\DoctrineORMBatcher\Exception;
 
+use InvalidArgumentException;
 use Safe\Exceptions\StringsException;
-use Setono\DoctrineORMBatcher\Exception\LowerBoundIsGreaterThanUpperBoundException;
+use function Safe\sprintf;
 
-final class Batch
+final class LowerBoundIsGreaterThanUpperBoundException extends InvalidArgumentException implements ExceptionInterface
 {
     /** @var int */
     private $lowerBound;
@@ -20,9 +21,7 @@ final class Batch
      */
     public function __construct(int $lowerBound, int $upperBound)
     {
-        if ($lowerBound > $upperBound) {
-            throw new LowerBoundIsGreaterThanUpperBoundException($lowerBound, $upperBound);
-        }
+        parent::__construct(sprintf('The lower bound, %d, is greater than the upper bound, %d', $lowerBound, $upperBound));
 
         $this->lowerBound = $lowerBound;
         $this->upperBound = $upperBound;

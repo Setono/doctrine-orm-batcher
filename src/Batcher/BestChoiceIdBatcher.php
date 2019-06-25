@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher;
 
-use RuntimeException;
-use Safe\Exceptions\StringsException;
-use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\Batch;
 
 final class BestChoiceIdBatcher implements IdBatcherInterface
@@ -37,13 +34,5 @@ final class BestChoiceIdBatcher implements IdBatcherInterface
         } else {
             yield from $this->realIdBatcher->getBatches($batchSize);
         }
-    }
-
-    /**
-     * @throws StringsException
-     */
-    public function getSparseness(): int
-    {
-        throw new RuntimeException(sprintf('No sparseness available on the %s', self::class)); // better exception
     }
 }
