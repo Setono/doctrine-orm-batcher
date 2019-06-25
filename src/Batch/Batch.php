@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batch;
 
+use InvalidArgumentException;
+use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
 final class Batch
@@ -14,10 +16,13 @@ final class Batch
     /** @var int */
     private $upperBound;
 
+    /**
+     * @throws StringsException
+     */
     public function __construct(int $lowerBound, int $upperBound)
     {
         if ($lowerBound > $upperBound) {
-            throw new \InvalidArgumentException(sprintf('Lower bound %s is greater than the upper bound %s', $lowerBound, $upperBound));
+            throw new InvalidArgumentException(sprintf('Lower bound %s is greater than the upper bound %s', $lowerBound, $upperBound));
         }
 
         $this->lowerBound = $lowerBound;

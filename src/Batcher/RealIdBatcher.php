@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping\MappingException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Safe\Exceptions\StringsException;
-use Setono\DoctrineORMBatcher\Batch\Batch;
 use function Safe\sprintf;
+use Setono\DoctrineORMBatcher\Batch\Batch;
 
 final class RealIdBatcher extends IdBatcher implements RealIdBatcherInterface
 {

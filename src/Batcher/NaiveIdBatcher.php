@@ -8,6 +8,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Mapping\MappingException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Batch\Batch;
 
 final class NaiveIdBatcher extends IdBatcher implements NaiveIdBatcherInterface
@@ -26,10 +27,11 @@ final class NaiveIdBatcher extends IdBatcher implements NaiveIdBatcherInterface
     }
 
     /**
-     * @throws NoResultException
-     * @throws MappingException
-     *
      * @return iterable|Batch[]
+     *
+     * @throws MappingException
+     * @throws NoResultException
+     * @throws StringsException
      */
     public function getBatches(int $batchSize = 100): iterable
     {
@@ -40,6 +42,7 @@ final class NaiveIdBatcher extends IdBatcher implements NaiveIdBatcherInterface
      * @throws MappingException
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @throws StringsException
      */
     public function getSparseness(): int
     {

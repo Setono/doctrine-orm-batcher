@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\MappingException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
+use RuntimeException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 
@@ -50,7 +51,7 @@ abstract class IdBatcher implements IdBatcherInterface
             $identifier = $metaData->getSingleIdentifierFieldName();
 
             if ('integer' !== $metaData->getTypeOfField($identifier)) {
-                throw new \RuntimeException(sprintf('The %s only works with identifiers that are integers',
+                throw new RuntimeException(sprintf('The %s only works with identifiers that are integers',
                     self::class));
             }
 
@@ -77,7 +78,7 @@ abstract class IdBatcher implements IdBatcherInterface
             $manager = $this->managerRegistry->getManagerForClass($this->class);
 
             if (!$manager instanceof EntityManagerInterface) {
-                throw new \RuntimeException('This library only works with the doctrine/orm library'); // todo better exception
+                throw new RuntimeException('This library only works with the doctrine/orm library'); // todo better exception
             }
 
             $this->manager = $manager;
@@ -89,6 +90,7 @@ abstract class IdBatcher implements IdBatcherInterface
     /**
      * @throws MappingException
      * @throws NoResultException
+     * @throws StringsException
      */
     protected function getMin(): int
     {
@@ -102,6 +104,7 @@ abstract class IdBatcher implements IdBatcherInterface
     /**
      * @throws MappingException
      * @throws NoResultException
+     * @throws StringsException
      */
     protected function getMax(): int
     {
@@ -115,6 +118,7 @@ abstract class IdBatcher implements IdBatcherInterface
     /**
      * @throws MappingException
      * @throws NoResultException
+     * @throws StringsException
      */
     private function initMinMax(): void
     {

@@ -7,3 +7,4 @@ services:
     PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer: ~
     PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~
     SlevomatCodingStandard\Sniffs\Commenting\RequireOneLinePropertyDocCommentSniff: ~
+    PhpCsFixer\Fixer\Import\OrderedImportsFixer: ~

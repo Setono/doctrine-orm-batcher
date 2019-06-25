@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher;
 
+use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Batch\Batch;
 
 final class NumberBatcher implements NumberBatcherInterface
 {
     /**
      * @return iterable|Batch[]
+     *
+     * @throws StringsException
      */
     public function getBatches(int $min, int $max, int $batchSize = 100): iterable
     {

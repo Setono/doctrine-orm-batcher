@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher;
 
-use Doctrine\ORM\Mapping\MappingException;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use Safe\Exceptions\StringsException;
-use Setono\DoctrineORMBatcher\Batch\Batch;
-use function Safe\sprintf;
 use RuntimeException;
+use Safe\Exceptions\StringsException;
+use function Safe\sprintf;
+use Setono\DoctrineORMBatcher\Batch\Batch;
 
 final class BestChoiceIdBatcher implements IdBatcherInterface
 {
@@ -32,11 +29,6 @@ final class BestChoiceIdBatcher implements IdBatcherInterface
 
     /**
      * @return iterable|Batch[]
-     *
-     * @throws MappingException
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     * @throws StringsException
      */
     public function getBatches(int $batchSize = 100): iterable
     {
