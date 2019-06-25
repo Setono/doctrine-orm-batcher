@@ -10,16 +10,12 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Setono\DoctrineORMBatcher\Batch\Batch;
 
-final class NaiveIdBatcher extends IdBatcher
+final class NaiveIdBatcher extends IdBatcher implements NaiveIdBatcherInterface
 {
-    /**
-     * @var NumberBatcherInterface
-     */
+    /** @var NumberBatcherInterface */
     private $numberBatcher;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $count;
 
     public function __construct(ManagerRegistry $managerRegistry, string $class, NumberBatcherInterface $numberBatcher)

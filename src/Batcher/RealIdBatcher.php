@@ -11,7 +11,7 @@ use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Batch\Batch;
 use function Safe\sprintf;
 
-final class RealIdBatcher extends IdBatcher
+final class RealIdBatcher extends IdBatcher implements RealIdBatcherInterface
 {
     /**
      * @return iterable|Batch[]
@@ -54,10 +54,5 @@ final class RealIdBatcher extends IdBatcher
         if ($lastId <= $max) {
             yield new Batch($lastId, $max);
         }
-    }
-
-    public function getSparseness(): int
-    {
-        return 0;
     }
 }

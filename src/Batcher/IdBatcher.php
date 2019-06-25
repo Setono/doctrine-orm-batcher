@@ -14,34 +14,22 @@ use function Safe\sprintf;
 
 abstract class IdBatcher implements IdBatcherInterface
 {
-    /**
-     * @var ManagerRegistry
-     */
+    /** @var ManagerRegistry */
     private $managerRegistry;
 
-    /**
-     * @var EntityManagerInterface
-     */
+    /** @var EntityManagerInterface */
     private $manager;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $identifier;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $class;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $min;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $max;
 
     public function __construct(ManagerRegistry $managerRegistry, string $class)

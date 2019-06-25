@@ -8,14 +8,10 @@ use function Safe\sprintf;
 
 final class Batch
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $lowerBound;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $upperBound;
 
     public function __construct(int $lowerBound, int $upperBound)
