@@ -1,10 +1,10 @@
 # Doctrine ORM Batcher library
 
-[![Latest Version][ico-version]][link-packagist]
-[![Latest Unstable Version][ico-unstable-version]][link-packagist]
-[![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
-[![Quality Score][ico-code-quality]][link-code-quality]
+![Packagist Version](https://img.shields.io/packagist/v/setono/doctrine-orm-batcher.svg?color=brightgreen&label=latest%20release)
+![Packagist Pre Release Version](https://img.shields.io/packagist/vpre/setono/doctrine-orm-batcher.svg?label=unstable)
+![Packagist](https://img.shields.io/packagist/l/setono/doctrine-orm-batcher.svg?color=blue)
+![Travis (.com)](https://img.shields.io/travis/com/setono/doctrine-orm-batcher.svg)
+![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/setono/doctrine-orm-batcher.svg)
 
 Use this library when you need to process large amounts of entities and maybe in an asynchronous way.
 
