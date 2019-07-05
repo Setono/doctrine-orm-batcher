@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\DoctrineORMBatcher\Batcher;
+namespace Tests\Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Setono\DoctrineORMBatcher\Batch\Batch;
-use Setono\DoctrineORMBatcher\Batcher\NaiveIdBatcher;
-use Setono\DoctrineORMBatcher\Batcher\NumberBatcher;
+use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdBatcher;
 use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
 use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
@@ -28,13 +26,13 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
 
         $batcher = $this->getBatcher();
 
-        /** @var Batch[] $expected */
+        /** @var RangeBatch[] $expected */
         $expected = [
-            new Batch(10, 19),
-            new Batch(20, 29),
-            new Batch(30, 39),
-            new Batch(40, 49),
-            new Batch(50, 52),
+            new RangeBatch(10, 19),
+            new RangeBatch(20, 29),
+            new RangeBatch(30, 39),
+            new RangeBatch(40, 49),
+            new RangeBatch(50, 52),
         ];
 
         $batches = $batcher->getBatches(10);
@@ -54,11 +52,13 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
     {
         $this->purger->purge();
 
+        // 6 rows
         for ($i = 10; $i <= 15; ++$i) {
             $entity = new Entity($i);
             $this->entityManager->persist($entity);
         }
 
+        // 35 rows
         for ($i = 18; $i <= 52; ++$i) {
             $entity = new Entity($i);
             $this->entityManager->persist($entity);
@@ -75,9 +75,9 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
 
     private function getBatcher(): NaiveIdBatcher
     {
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
-        $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb->select('o')->from(Entity::class, 'o');
 
-        return new NaiveIdBatcher($managerRegistry, Entity::class, new NumberBatcher());
+        return new NaiveIdBatcher($qb);
     }
 }

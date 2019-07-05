@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Setono\DoctrineORMBatcher\Batcher;
+namespace Setono\DoctrineORMBatcher\Batcher\Range;
 
 interface NumberBatcherInterface
 {
