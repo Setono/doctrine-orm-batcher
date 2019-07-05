@@ -15,6 +15,98 @@ when the tables become too large. As for Doctrine batch processing capabilities 
 library is very opinionated. It will work very well in a message based architecture where large processing will 
 likely be done in an asynchronous way.
 
+How does it work then? It uses the [seek method](https://www.google.com/search?q=mysql+seek+method) to paginate results instead.
+
+## Installation
+
+```bash
+$ composer require setono/doctrine-orm-batcher
+```
+
+## Usage
+
+There are two ways to get results: Getting a range of ids or getting a collection (either of ids or entities).
+
+### Range of ids
+A range is a lower and upper bound of ids. This is typically intended to be used in an asynchronous environment
+where you will dispatch a message with the lower and upper bounds so that the consumer of that message
+will be able to easily fetch the respective entities based on these bounds.
+
+**Example**
+
+You want to process all your `Product` entities. A query builder for that would look like:
+
+```php
+<?php
+use Doctrine\ORM\EntityManagerInterface;
+
+/** @var EntityManagerInterface $em */
+
+$qb = $em->createQueryBuilder();
+$qb->select('o')->from(Product::class, 'o');
+```
+
+Now inject that query builder into the id range batcher and dispatch a message:
+
+```php
+<?php
+use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Factory\BestIdRangeBatcherFactory;
+
+class ProcessProductBatchMessage
+{
+    private $batch;
+    
+    public function __construct(RangeBatch $batch)
+    {
+        $this->batch = $batch;        
+    }
+    
+    public function getBatch(): RangeBatch
+    {
+        return $this->batch;
+    }
+}
+
+$factory = new BestIdRangeBatcherFactory();
+$bestChoiceIdBatcher = $factory->create($qb);
+
+$batches = $bestChoiceIdBatcher->getBatches(50);
+
+foreach ($batches as $batch) {
+    $commandBus->dispatch(new ProcessProductBatchMessage($batch));
+}
+```
+
+Then sometime somewhere a consumer will receive that message and process the products:
+
+```php
+<?php
+class ProcessProductBatchMessageHandler
+{
+    public function __invoke(ProcessProductBatchMessage $message)
+    {
+        $products = $qb->select('o')
+            ->from(Product::class, 'o')
+            ->andWhere('o.id >= :lowerBound')
+            ->andWhere('o.id <= :upperBound')
+            ->setParameters([
+                'lowerBound' => $message->getBatch()->getLowerBound(),
+                'upperBound' => $message->getBatch()->getUpperBound(),
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+        
+        foreach ($products as $product) {
+            // process $product
+        }
+    }
+}
+```
+
+This approach is *extremely* fast, but if you have complex queries it may be easier to use the collection batchers.
+
 [ico-version]: https://poser.pugx.org/setono/doctrine-orm-batcher/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/doctrine-orm-batcher/v/unstable
 [ico-license]: https://poser.pugx.org/setono/doctrine-orm-batcher/license

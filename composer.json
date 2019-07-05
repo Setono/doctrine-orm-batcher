@@ -12,6 +12,7 @@
     "require": {
         "doctrine/orm": "^2.6",
         "phpunit/phpunit": "^8.2",
+        "symfony/property-access": "^4.3",
         "thecodingmachine/safe": "^0.1.15"
     },
     "require-dev": {

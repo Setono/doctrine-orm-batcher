@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Setono\DoctrineORMBatcher\Batcher;
+namespace Setono\DoctrineORMBatcher\Batcher\Range;
 
 use Safe\Exceptions\StringsException;
-use Setono\DoctrineORMBatcher\Batch\Batch;
+use Setono\DoctrineORMBatcher\Batch\RangeBatch;
 
 final class NumberBatcher implements NumberBatcherInterface
 {
     /**
-     * @return iterable|Batch[]
+     * @return iterable|RangeBatch[]
      *
      * @throws StringsException
      */
@@ -24,7 +24,7 @@ final class NumberBatcher implements NumberBatcherInterface
             $firstNumber = $batch * $batchSize + $min;
             $lastNumber = $lastBatch ? $max : ($firstNumber + $batchSize) - 1;
 
-            yield new Batch($firstNumber, $lastNumber);
+            yield new RangeBatch($firstNumber, $lastNumber);
         }
     }
 }

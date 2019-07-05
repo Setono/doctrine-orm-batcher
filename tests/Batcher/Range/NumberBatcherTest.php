@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\DoctrineORMBatcher\Batcher;
+namespace Tests\Setono\DoctrineORMBatcher\Batcher\Range;
 
 use PHPUnit\Framework\TestCase;
-use Setono\DoctrineORMBatcher\Batch\Batch;
-use Setono\DoctrineORMBatcher\Batcher\NumberBatcher;
+use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Batcher\Range\NumberBatcher;
 
 final class NumberBatcherTest extends TestCase
 {
@@ -17,12 +17,12 @@ final class NumberBatcherTest extends TestCase
     {
         $batcher = new NumberBatcher();
 
-        /** @var Batch[] $expected */
+        /** @var RangeBatch[] $expected */
         $expected = [
-            new Batch(12, 21),
-            new Batch(22, 31),
-            new Batch(32, 41),
-            new Batch(42, 50),
+            new RangeBatch(12, 21),
+            new RangeBatch(22, 31),
+            new RangeBatch(32, 41),
+            new RangeBatch(42, 50),
         ];
 
         $batches = $batcher->getBatches(12, 50, 10);

@@ -7,7 +7,7 @@ namespace Setono\DoctrineORMBatcher\Batch;
 use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Exception\LowerBoundIsGreaterThanUpperBoundException;
 
-final class Batch
+final class RangeBatch
 {
     /** @var int */
     private $lowerBound;

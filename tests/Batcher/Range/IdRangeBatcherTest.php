@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\DoctrineORMBatcher\Batcher;
+namespace Tests\Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Setono\DoctrineORMBatcher\Batch\Batch;
-use Setono\DoctrineORMBatcher\Batcher\RealIdBatcher;
+use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcher;
 use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
 use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
-final class RealIdBatcherTest extends EntityManagerAwareTestCase
+final class IdRangeBatcherTest extends EntityManagerAwareTestCase
 {
     /**
      * @test
@@ -41,21 +40,22 @@ final class RealIdBatcherTest extends EntityManagerAwareTestCase
 
         $this->entityManager->flush();
 
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
-        $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
-        $idBatch = new RealIdBatcher($managerRegistry, Entity::class);
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb->select('o')->from(Entity::class, 'o');
 
-        /** @var Batch[] $expected */
+        $batcher = new IdRangeBatcher($qb);
+
+        /** @var RangeBatch[] $expected */
         $expected = [
-            new Batch(10, 21),
-            new Batch(22, 37),
-            new Batch(38, 47),
-            new Batch(48, 84),
-            new Batch(85, 94),
-            new Batch(95, 100),
+            new RangeBatch(10, 21),
+            new RangeBatch(22, 37),
+            new RangeBatch(38, 47),
+            new RangeBatch(48, 84),
+            new RangeBatch(85, 94),
+            new RangeBatch(95, 100),
         ];
 
-        $batches = $idBatch->getBatches(10);
+        $batches = $batcher->getBatches(10);
 
         foreach ($batches as $idx => $batch) {
             $this->assertSame($expected[$idx]->getLowerBound(), $batch->getLowerBound());
@@ -94,22 +94,23 @@ final class RealIdBatcherTest extends EntityManagerAwareTestCase
 
         $this->entityManager->flush();
 
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
-        $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
-        $idBatch = new RealIdBatcher($managerRegistry, Entity::class);
+        $qb = $this->entityManager->createQueryBuilder();
+        $qb->select('o')->from(Entity::class, 'o');
 
-        /** @var Batch[] $expected */
+        $batcher = new IdRangeBatcher($qb);
+
+        /** @var RangeBatch[] $expected */
         $expected = [
-            new Batch(10, 21),
-            new Batch(22, 37),
-            new Batch(38, 47),
-            new Batch(48, 84),
-            new Batch(85, 94),
-            new Batch(95, 104),
-            new Batch(105, 105),
+            new RangeBatch(10, 21),
+            new RangeBatch(22, 37),
+            new RangeBatch(38, 47),
+            new RangeBatch(48, 84),
+            new RangeBatch(85, 94),
+            new RangeBatch(95, 104),
+            new RangeBatch(105, 105),
         ];
 
-        $batches = $idBatch->getBatches(10);
+        $batches = $batcher->getBatches(10);
 
         foreach ($batches as $idx => $batch) {
             $this->assertSame($expected[$idx]->getLowerBound(), $batch->getLowerBound());
