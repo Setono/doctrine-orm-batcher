@@ -6,7 +6,6 @@ namespace Setono\DoctrineORMBatcher\Batcher\Range;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\QueryBuilder;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
@@ -14,22 +13,8 @@ use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
 final class NaiveIdBatcher extends Batcher implements NaiveIdBatcherInterface
 {
-    /** @var NumberBatcherInterface */
-    private $numberBatcher;
-
     /** @var int */
     private $count;
-
-    public function __construct(QueryBuilder $qb, string $identifier = 'id', NumberBatcherInterface $numberBatcher = null)
-    {
-        parent::__construct($qb, $identifier);
-
-        if (null === $numberBatcher) {
-            $numberBatcher = new NumberBatcher();
-        }
-
-        $this->numberBatcher = $numberBatcher;
-    }
 
     /**
      * @return iterable|RangeBatch[]
@@ -39,7 +24,19 @@ final class NaiveIdBatcher extends Batcher implements NaiveIdBatcherInterface
      */
     public function getBatches(int $batchSize = 100): iterable
     {
-        yield from $this->numberBatcher->getBatches($this->getMin(), $this->getMax(), $batchSize);
+        $min = $this->getMin();
+        $max = $this->getMax();
+
+        $batches = (int) ceil((($max - $min) + 1) / $batchSize);
+
+        for ($batch = 0; $batch < $batches; ++$batch) {
+            $lastBatch = ($batch + 1 === $batches);
+
+            $firstNumber = $batch * $batchSize + $min;
+            $lastNumber = $lastBatch ? $max : ($firstNumber + $batchSize) - 1;
+
+            yield new RangeBatch($firstNumber, $lastNumber);
+        }
     }
 
     /**
