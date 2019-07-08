@@ -86,17 +86,9 @@ class ProcessProductBatchMessageHandler
 {
     public function __invoke(ProcessProductBatchMessage $message)
     {
-        $products = $qb->select('o')
-            ->from(Product::class, 'o')
-            ->andWhere('o.id >= :lowerBound')
-            ->andWhere('o.id <= :upperBound')
-            ->setParameters([
-                'lowerBound' => $message->getBatch()->getLowerBound(),
-                'upperBound' => $message->getBatch()->getUpperBound(),
-            ])
-            ->getQuery()
-            ->getResult()
-        ;
+        $query = $em->createQuery($message->getBatch()->getDql());
+        $query->setParameters($message->getBatch()->getParameters());
+        $products = $query->getResult();
         
         foreach ($products as $product) {
             // process $product

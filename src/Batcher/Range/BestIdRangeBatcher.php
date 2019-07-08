@@ -12,7 +12,7 @@ final class BestIdRangeBatcher implements BatcherInterface
     /** @var BatcherInterface */
     private $bestChoiceIdBatcher;
 
-    /** @var NaiveIdBatcherInterface */
+    /** @var NaiveIdRangeBatcherInterface */
     private $naiveIdBatcher;
 
     /** @var IdRangeBatcherInterface */
@@ -21,7 +21,7 @@ final class BestIdRangeBatcher implements BatcherInterface
     /** @var int */
     private $sparsenessThreshold;
 
-    public function __construct(NaiveIdBatcherInterface $naiveIdBatcher, IdRangeBatcherInterface $realIdBatcher, int $sparsenessThreshold = 5)
+    public function __construct(NaiveIdRangeBatcherInterface $naiveIdBatcher, IdRangeBatcherInterface $realIdBatcher, int $sparsenessThreshold = 5)
     {
         $this->naiveIdBatcher = $naiveIdBatcher;
         $this->realIdBatcher = $realIdBatcher;

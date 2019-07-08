@@ -8,13 +8,13 @@ use Doctrine\ORM\QueryBuilder;
 use Setono\DoctrineORMBatcher\Batcher\BatcherInterface;
 use Setono\DoctrineORMBatcher\Batcher\Range\BestIdRangeBatcher;
 use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcher;
-use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcher;
 
 final class BestIdRangeBatcherFactory implements BestIdRangeBatcherFactoryInterface
 {
     public function create(QueryBuilder $qb, string $identifier = 'id', int $sparsenessThreshold = 5): BatcherInterface
     {
-        $naiveIdBatcher = new NaiveIdBatcher($qb, $identifier);
+        $naiveIdBatcher = new NaiveIdRangeBatcher($qb, $identifier);
         $realIdBatcher = new IdRangeBatcher($qb, $identifier);
 
         return new BestIdRangeBatcher($naiveIdBatcher, $realIdBatcher, $sparsenessThreshold);

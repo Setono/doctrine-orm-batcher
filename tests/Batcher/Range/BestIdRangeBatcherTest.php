@@ -7,7 +7,7 @@ namespace Tests\Setono\DoctrineORMBatcher\Batcher\Range;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Setono\DoctrineORMBatcher\Batcher\Range\BestIdRangeBatcher;
 use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcherInterface;
-use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdBatcherInterface;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcherInterface;
 use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
 use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
@@ -21,7 +21,7 @@ final class BestIdRangeBatcherTest extends EntityManagerAwareTestCase
         $qb = $this->entityManager->createQueryBuilder();
         $qb->select('o')->from(Entity::class, 'o');
 
-        $naiveIdBatcher = $this->createMock(NaiveIdBatcherInterface::class);
+        $naiveIdBatcher = $this->createMock(NaiveIdRangeBatcherInterface::class);
         $naiveIdBatcher->method('getSparseness')->willReturn(5);
         $naiveIdBatcher->method('getBatches')->willReturn(['BATCH']);
         $realIdBatcher = $this->createMock(IdRangeBatcherInterface::class);
@@ -39,7 +39,7 @@ final class BestIdRangeBatcherTest extends EntityManagerAwareTestCase
         $managerRegistry = $this->createMock(ManagerRegistry::class);
         $managerRegistry->method('getManagerForClass')->willReturn($this->entityManager);
 
-        $naiveIdBatcher = $this->createMock(NaiveIdBatcherInterface::class);
+        $naiveIdBatcher = $this->createMock(NaiveIdRangeBatcherInterface::class);
         $naiveIdBatcher->method('getSparseness')->willReturn(15);
         $realIdBatcher = $this->createMock(IdRangeBatcherInterface::class);
         $realIdBatcher->method('getBatches')->willReturn(['BATCH']);

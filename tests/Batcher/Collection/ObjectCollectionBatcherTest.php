@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Setono\DoctrineORMBatcher\Batcher\Collection;
 
-use Setono\DoctrineORMBatcher\Batcher\Collection\CollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Collection\ObjectCollectionBatcher;
 use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
 use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
-final class CollectionBatcherTest extends EntityManagerAwareTestCase
+final class ObjectCollectionBatcherTest extends EntityManagerAwareTestCase
 {
     /**
      * @test
@@ -53,7 +53,7 @@ final class CollectionBatcherTest extends EntityManagerAwareTestCase
             ->andWhere('o.enabled = 1')
         ;
 
-        $batcher = new CollectionBatcher($qb);
+        $batcher = new ObjectCollectionBatcher($qb);
 
         $batches = $batcher->getBatches(10);
 

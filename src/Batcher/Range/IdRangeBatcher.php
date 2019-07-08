@@ -7,9 +7,8 @@ namespace Setono\DoctrineORMBatcher\Batcher\Range;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
-use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
-final class IdRangeBatcher extends Batcher implements IdRangeBatcherInterface
+final class IdRangeBatcher extends RangeBatcher implements IdRangeBatcherInterface
 {
     /**
      * @return iterable|RangeBatch[]
@@ -22,7 +21,7 @@ final class IdRangeBatcher extends Batcher implements IdRangeBatcherInterface
 
         foreach ($result as $ids) {
             // because we order the result set by id asc we know that the lowest number is on index 0 and the highest is on the last index
-            yield new RangeBatch($ids[0]['id'], $ids[count($ids) - 1]['id']);
+            yield new RangeBatch($ids[0]['id'], $ids[count($ids) - 1]['id'], $this->getBatchableQueryBuilder());
         }
     }
 }

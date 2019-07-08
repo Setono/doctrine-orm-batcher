@@ -97,6 +97,11 @@ abstract class Batcher implements BatcherInterface
     }
 
     /**
+     * This will return a query builder where the constraints for the respective batcher are added.
+     */
+    abstract protected function getBatchableQueryBuilder(): QueryBuilder;
+
+    /**
      * @throws NoResultException
      * @throws StringsException
      */

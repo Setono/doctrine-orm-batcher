@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher\Collection;
 
+use Doctrine\ORM\QueryBuilder;
 use Safe\Exceptions\StringsException;
+use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
 use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
-final class CollectionBatcher extends Batcher
+abstract class CollectionBatcher extends Batcher
 {
     /**
-     * @return iterable|CollectionBatch[]
-     *
      * @throws StringsException
      */
-    public function getBatches(int $batchSize = 100): iterable
+    protected function getBatchableQueryBuilder(): QueryBuilder
     {
-        $result = $this->getResult(null, $batchSize);
+        $qb = $this->getQueryBuilder();
+        $qb->andWhere(sprintf('%s.%s IN(:%s)', $this->alias, $this->identifier, CollectionBatch::PARAMETER_COLLECTION));
 
-        foreach ($result as $objects) {
-            yield new CollectionBatch($objects);
-        }
+        return $qb;
     }
 }

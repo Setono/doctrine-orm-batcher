@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Setono\DoctrineORMBatcher\Batch\RangeBatch;
-use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcher;
 use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
 use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
-final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
+final class NaiveIdRangeBatcherTest extends EntityManagerAwareTestCase
 {
     /**
      * @test
@@ -26,20 +25,19 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
 
         $batcher = $this->getBatcher();
 
-        /** @var RangeBatch[] $expected */
         $expected = [
-            new RangeBatch(10, 19),
-            new RangeBatch(20, 29),
-            new RangeBatch(30, 39),
-            new RangeBatch(40, 49),
-            new RangeBatch(50, 52),
+            ['lowerBound' => 10, 'upperBound' => 19],
+            ['lowerBound' => 20, 'upperBound' => 29],
+            ['lowerBound' => 30, 'upperBound' => 39],
+            ['lowerBound' => 40, 'upperBound' => 49],
+            ['lowerBound' => 50, 'upperBound' => 52],
         ];
 
         $batches = $batcher->getBatches(10);
 
         foreach ($batches as $idx => $batch) {
-            $this->assertSame($expected[$idx]->getLowerBound(), $batch->getLowerBound());
-            $this->assertSame($expected[$idx]->getUpperBound(), $batch->getUpperBound());
+            $this->assertSame($expected[$idx]['lowerBound'], $batch->getLowerBound());
+            $this->assertSame($expected[$idx]['upperBound'], $batch->getUpperBound());
         }
 
         $this->assertSame(4, $idx);
@@ -73,11 +71,11 @@ final class NaiveIdBatcherTest extends EntityManagerAwareTestCase
         $this->assertSame(5, $sparseness);
     }
 
-    private function getBatcher(): NaiveIdBatcher
+    private function getBatcher(): NaiveIdRangeBatcher
     {
         $qb = $this->entityManager->createQueryBuilder();
         $qb->select('o')->from(Entity::class, 'o');
 
-        return new NaiveIdBatcher($qb);
+        return new NaiveIdRangeBatcher($qb);
     }
 }

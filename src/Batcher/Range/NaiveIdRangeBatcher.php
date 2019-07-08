@@ -9,9 +9,8 @@ use Doctrine\ORM\NoResultException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
-use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
-final class NaiveIdBatcher extends Batcher implements NaiveIdBatcherInterface
+final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatcherInterface
 {
     /** @var int */
     private $count;
@@ -35,7 +34,7 @@ final class NaiveIdBatcher extends Batcher implements NaiveIdBatcherInterface
             $firstNumber = $batch * $batchSize + $min;
             $lastNumber = $lastBatch ? $max : ($firstNumber + $batchSize) - 1;
 
-            yield new RangeBatch($firstNumber, $lastNumber);
+            yield new RangeBatch($firstNumber, $lastNumber, $this->getBatchableQueryBuilder());
         }
     }
 

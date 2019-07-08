@@ -7,9 +7,8 @@ namespace Setono\DoctrineORMBatcher\Batcher\Collection;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
-use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
-final class IdCollectionBatcher extends Batcher
+final class IdCollectionBatcher extends CollectionBatcher
 {
     /**
      * @return iterable|CollectionBatch[]
@@ -25,7 +24,7 @@ final class IdCollectionBatcher extends Batcher
                 return $elm[$this->identifier];
             }, $ids);
 
-            yield new CollectionBatch($flattened);
+            yield new CollectionBatch($flattened, $this->getBatchableQueryBuilder());
         }
     }
 }

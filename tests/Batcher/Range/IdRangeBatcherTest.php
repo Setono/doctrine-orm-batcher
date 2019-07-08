@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Setono\DoctrineORMBatcher\Batch\RangeBatch;
 use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcher;
 use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
 use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
@@ -45,21 +44,20 @@ final class IdRangeBatcherTest extends EntityManagerAwareTestCase
 
         $batcher = new IdRangeBatcher($qb);
 
-        /** @var RangeBatch[] $expected */
         $expected = [
-            new RangeBatch(10, 21),
-            new RangeBatch(22, 37),
-            new RangeBatch(38, 47),
-            new RangeBatch(48, 84),
-            new RangeBatch(85, 94),
-            new RangeBatch(95, 100),
+            ['lowerBound' => 10, 'upperBound' => 21],
+            ['lowerBound' => 22, 'upperBound' => 37],
+            ['lowerBound' => 38, 'upperBound' => 47],
+            ['lowerBound' => 48, 'upperBound' => 84],
+            ['lowerBound' => 85, 'upperBound' => 94],
+            ['lowerBound' => 95, 'upperBound' => 100],
         ];
 
         $batches = $batcher->getBatches(10);
 
         foreach ($batches as $idx => $batch) {
-            $this->assertSame($expected[$idx]->getLowerBound(), $batch->getLowerBound());
-            $this->assertSame($expected[$idx]->getUpperBound(), $batch->getUpperBound());
+            $this->assertSame($expected[$idx]['lowerBound'], $batch->getLowerBound());
+            $this->assertSame($expected[$idx]['upperBound'], $batch->getUpperBound());
         }
 
         $this->assertSame(5, $idx);
@@ -99,22 +97,21 @@ final class IdRangeBatcherTest extends EntityManagerAwareTestCase
 
         $batcher = new IdRangeBatcher($qb);
 
-        /** @var RangeBatch[] $expected */
         $expected = [
-            new RangeBatch(10, 21),
-            new RangeBatch(22, 37),
-            new RangeBatch(38, 47),
-            new RangeBatch(48, 84),
-            new RangeBatch(85, 94),
-            new RangeBatch(95, 104),
-            new RangeBatch(105, 105),
+            ['lowerBound' => 10, 'upperBound' => 21],
+            ['lowerBound' => 22, 'upperBound' => 37],
+            ['lowerBound' => 38, 'upperBound' => 47],
+            ['lowerBound' => 48, 'upperBound' => 84],
+            ['lowerBound' => 85, 'upperBound' => 94],
+            ['lowerBound' => 95, 'upperBound' => 104],
+            ['lowerBound' => 105, 'upperBound' => 105],
         ];
 
         $batches = $batcher->getBatches(10);
 
         foreach ($batches as $idx => $batch) {
-            $this->assertSame($expected[$idx]->getLowerBound(), $batch->getLowerBound());
-            $this->assertSame($expected[$idx]->getUpperBound(), $batch->getUpperBound());
+            $this->assertSame($expected[$idx]['lowerBound'], $batch->getLowerBound());
+            $this->assertSame($expected[$idx]['upperBound'], $batch->getUpperBound());
         }
 
         $this->assertSame(6, $idx);
