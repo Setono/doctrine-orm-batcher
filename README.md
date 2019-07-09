@@ -82,13 +82,15 @@ Then sometime somewhere a consumer will receive that message and process the pro
 
 ```php
 <?php
+use Setono\DoctrineORMBatcher\Query\QueryRebuilder;
+
 class ProcessProductBatchMessageHandler
 {
     public function __invoke(ProcessProductBatchMessage $message)
     {
-        $query = $em->createQuery($message->getBatch()->getDql());
-        $query->setParameters($message->getBatch()->getParameters());
-        $products = $query->getResult();
+        $queryRebuilder = new QueryRebuilder();
+        $q = $queryRebuilder->rebuild($em, $message->getBatch());
+        $products = $q->getResult();
         
         foreach ($products as $product) {
             // process $product
