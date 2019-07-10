@@ -7,6 +7,11 @@ namespace Setono\DoctrineORMBatcher\Batch;
 interface BatchInterface
 {
     /**
+     * This is the root entity that can be used to get the entity manager from the manager registry.
+     */
+    public function getClass(): string;
+
+    /**
      * This is the DQL needed to fetch this particular batch.
      */
     public function getDql(): string;
