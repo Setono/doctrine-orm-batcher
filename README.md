@@ -101,6 +101,9 @@ class ProcessProductBatchMessageHandler
 
 This approach is *extremely* fast, but if you have complex queries it may be easier to use the collection batchers.
 
+## Framework integration
+- [Symfony bundle](https://github.com/Setono/DoctrineORMBatcherBundle)
+
 [ico-version]: https://poser.pugx.org/setono/doctrine-orm-batcher/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/doctrine-orm-batcher/v/unstable
 [ico-license]: https://poser.pugx.org/setono/doctrine-orm-batcher/license
