@@ -51,7 +51,7 @@ Now inject that query builder into the id range batcher and dispatch a message:
 ```php
 <?php
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
-use Setono\DoctrineORMBatcher\Factory\BestIdRangeBatcherFactory;
+use Setono\DoctrineORMBatcher\Factory\BatcherFactory;
 
 class ProcessProductBatchMessage
 {
@@ -68,8 +68,8 @@ class ProcessProductBatchMessage
     }
 }
 
-$factory = new BestIdRangeBatcherFactory();
-$bestChoiceIdBatcher = $factory->create($qb);
+$factory = new BatcherFactory();
+$bestChoiceIdBatcher = $factory->createBestIdRangeBatcher($qb);
 
 $batches = $bestChoiceIdBatcher->getBatches(50);
 
