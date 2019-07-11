@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher;
 
+use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
+use InvalidArgumentException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -13,14 +15,17 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 abstract class Batcher implements BatcherInterface
 {
+    /** @var QueryBuilder */
+    private $qb;
+
     /** @var string */
     protected $identifier;
 
+    /** @var bool */
+    private $clearOnBatch;
+
     /** @var string */
     protected $alias;
-
-    /** @var QueryBuilder */
-    private $qb;
 
     /** @var int */
     private $min;
@@ -31,14 +36,20 @@ abstract class Batcher implements BatcherInterface
     /** @var PropertyAccessorInterface */
     private $propertyAccessor;
 
-    public function __construct(QueryBuilder $qb, string $identifier = 'id')
+    /**
+     * @param QueryBuilder $qb           The query builder you have built for fetching objects
+     * @param string       $identifier   The identifier of the root entity in your query builder
+     * @param bool         $clearOnBatch If true it will clear the entity manager on each new batch
+     */
+    public function __construct(QueryBuilder $qb, string $identifier = 'id', bool $clearOnBatch = true)
     {
         $this->qb = clone $qb;
         $this->identifier = $identifier;
+        $this->clearOnBatch = $clearOnBatch;
 
         $rootAliases = $this->qb->getRootAliases();
         if (1 !== count($rootAliases)) {
-            throw new \InvalidArgumentException('The query builder must have exactly one root alias'); // todo better exception
+            throw new InvalidArgumentException('The query builder must have exactly one root alias'); // todo better exception
         }
 
         $this->alias = $rootAliases[0];
@@ -54,6 +65,7 @@ abstract class Batcher implements BatcherInterface
      * Notice that the $select must include the identifier in some way.
      * If the $select is null the original select statement will be used.
      *
+     * @throws MappingException
      * @throws StringsException
      */
     protected function getResult(string $select = null, int $batchSize = 100): iterable
@@ -72,6 +84,8 @@ abstract class Batcher implements BatcherInterface
         $lastId = 0;
 
         while (true) {
+            $this->clear();
+
             $qb->setParameter('lastId', $lastId);
             $result = $qb->getQuery()->getResult();
 
@@ -86,6 +100,20 @@ abstract class Batcher implements BatcherInterface
 
             yield $result;
         }
+
+        $this->clear();
+    }
+
+    /**
+     * @throws MappingException
+     */
+    private function clear(): void
+    {
+        if (!$this->clearOnBatch) {
+            return;
+        }
+
+        $this->qb->getEntityManager()->clear();
     }
 
     /**

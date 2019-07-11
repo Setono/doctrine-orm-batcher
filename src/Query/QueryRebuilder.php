@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
+use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Batch\BatchInterface;
 use Setono\DoctrineORMBatcher\Exception\NoManagerException;
 
@@ -22,7 +23,7 @@ final class QueryRebuilder implements QueryRebuilderInterface
     }
 
     /**
-     * @throws \Safe\Exceptions\StringsException
+     * @throws StringsException
      */
     public function rebuild(BatchInterface $batch): Query
     {
@@ -35,7 +36,7 @@ final class QueryRebuilder implements QueryRebuilderInterface
     }
 
     /**
-     * @throws \Safe\Exceptions\StringsException
+     * @throws StringsException
      */
     private function getManager(string $class): EntityManagerInterface
     {
