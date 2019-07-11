@@ -7,11 +7,12 @@ namespace Setono\DoctrineORMBatcher\Batcher\Collection;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
+use Setono\DoctrineORMBatcher\Batch\CollectionBatchInterface;
 
 final class ObjectCollectionBatcher extends CollectionBatcher
 {
     /**
-     * @return iterable|CollectionBatch[]
+     * @return iterable|CollectionBatchInterface[]
      *
      * @throws StringsException
      * @throws MappingException

@@ -9,6 +9,7 @@ use Doctrine\ORM\NoResultException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 
 final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatcherInterface
 {
@@ -16,7 +17,7 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
     private $count;
 
     /**
-     * @return iterable|RangeBatch[]
+     * @return iterable<RangeBatchInterface>
      *
      * @throws NoResultException
      * @throws StringsException

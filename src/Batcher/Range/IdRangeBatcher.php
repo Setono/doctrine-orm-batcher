@@ -8,11 +8,12 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 
 final class IdRangeBatcher extends RangeBatcher implements IdRangeBatcherInterface
 {
     /**
-     * @return iterable|RangeBatch[]
+     * @return iterable<RangeBatchInterface>
      *
      * @throws StringsException
      * @throws MappingException

@@ -6,7 +6,7 @@ namespace Setono\DoctrineORMBatcher\Batch;
 
 use Doctrine\ORM\QueryBuilder;
 
-final class CollectionBatch extends Batch
+final class CollectionBatch extends Batch implements CollectionBatchInterface
 {
     public const PARAMETER_COLLECTION = 'collection';
 

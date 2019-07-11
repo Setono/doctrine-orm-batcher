@@ -8,11 +8,12 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
 use Safe\Exceptions\StringsException;
 use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
+use Setono\DoctrineORMBatcher\Batch\CollectionBatchInterface;
 
 final class IdCollectionBatcher extends CollectionBatcher
 {
     /**
-     * @return iterable|CollectionBatch[]
+     * @return iterable<CollectionBatchInterface>
      *
      * @throws StringsException
      * @throws MappingException

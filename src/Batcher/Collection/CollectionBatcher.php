@@ -10,7 +10,7 @@ use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
 use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
-abstract class CollectionBatcher extends Batcher
+abstract class CollectionBatcher extends Batcher implements CollectionBatcherInterface
 {
     /**
      * @throws StringsException

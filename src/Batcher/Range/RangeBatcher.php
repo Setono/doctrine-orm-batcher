@@ -10,7 +10,7 @@ use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
 use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
-abstract class RangeBatcher extends Batcher
+abstract class RangeBatcher extends Batcher implements RangeBatcherInterface
 {
     /**
      * @throws StringsException

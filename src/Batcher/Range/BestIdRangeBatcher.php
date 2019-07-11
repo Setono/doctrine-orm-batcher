@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 use Setono\DoctrineORMBatcher\Batcher\BatcherInterface;
 
-final class BestIdRangeBatcher implements BatcherInterface
+final class BestIdRangeBatcher implements RangeBatcherInterface
 {
     /** @var BatcherInterface */
     private $bestChoiceIdBatcher;
@@ -29,7 +29,7 @@ final class BestIdRangeBatcher implements BatcherInterface
     }
 
     /**
-     * @return iterable|RangeBatch[]
+     * @return iterable<RangeBatchInterface>
      */
     public function getBatches(int $batchSize = 100): iterable
     {

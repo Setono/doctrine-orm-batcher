@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Setono\DoctrineORMBatcher\Batcher\BatcherInterface;
-
-interface NaiveIdRangeBatcherInterface extends BatcherInterface
+interface NaiveIdRangeBatcherInterface extends RangeBatcherInterface
 {
     /**
      * Returns an indication (from 1-100) about how sparse the batches will be.

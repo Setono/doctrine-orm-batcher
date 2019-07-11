@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Exception\LowerBoundIsGreaterThanUpperBoundException;
 
-final class RangeBatch extends Batch
+final class RangeBatch extends Batch implements RangeBatchInterface
 {
     public const PARAMETER_LOWER_BOUND = 'lowerBound';
 
