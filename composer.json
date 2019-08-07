@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "php": "^7.1",
         "doctrine/orm": "^2.6",
         "symfony/property-access": "^4.3",
         "thecodingmachine/safe": "^0.1.15"
