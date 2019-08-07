@@ -71,8 +71,8 @@ class ProcessProductBatchMessage
 $factory = new BatcherFactory();
 $bestChoiceIdBatcher = $factory->createBestIdRangeBatcher($qb);
 
+/** @var RangeBatch[] $batches */
 $batches = $bestChoiceIdBatcher->getBatches(50);
-
 foreach ($batches as $batch) {
     $commandBus->dispatch(new ProcessProductBatchMessage($batch));
 }
@@ -100,6 +100,124 @@ class ProcessProductBatchMessageHandler
 ```
 
 This approach is *extremely* fast, but if you have complex queries it may be easier to use the collection batchers.
+
+### Collection of ids
+
+Should be used for async handling of sets that selected with complex queries.
+
+**Example**
+
+You want to process only enabled `Product` entities.
+
+```php
+<?php
+
+use Doctrine\ORM\EntityManagerInterface;
+use Setono\DoctrineORMBatcher\Factory\BatcherFactory;
+use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
+
+class ProcessEnabledProductBatchMessage
+{
+    /** @var CollectionBatch */
+    private $batch;
+    
+    public function __construct(CollectionBatch $batch)
+    {
+        $this->batch = $batch;        
+    }
+    
+    public function getBatch(): CollectionBatch
+    {
+        return $this->batch;
+    }
+}
+
+/** @var EntityManagerInterface $em */
+$qb = $em->createQueryBuilder();
+$qb->select('o')
+    ->from(Product::class, 'o')
+    ->where('o.enabled = 1')
+;
+$factory = new BatcherFactory();
+$idCollectionBatcher = $factory->createIdCollectionBatcher($qb);
+
+/** @var CollectionBatch[] $batches */
+$batches = $idCollectionBatcher->getBatches(50);
+foreach ($batches as $batch) {
+    $commandBus->dispatch(new ProcessEnabledProductBatchMessage($batch));
+}
+```
+
+Then sometime somewhere a consumer will receive that message and process the products:
+
+```php
+<?php
+use Setono\DoctrineORMBatcher\Query\QueryRebuilderInterface;
+
+class ProcessProductBatchMessageHandler
+{
+    public function __invoke(ProcessEnabledProductBatchMessage $message)
+    {
+        /** @var QueryRebuilderInterface $queryRebuilder */
+        $q = $queryRebuilder->rebuild($message->getBatch());
+        $products = $q->getResult();
+        
+        foreach ($products as $product) {
+            // process $product
+        }
+    }
+}
+```
+
+### Collection of objects
+
+Should be used for immediate handing objects that selected with complex queries.
+
+**Example**
+
+You want to immediately process only enabled `Product` entities.
+
+```php
+<?php
+
+use Doctrine\ORM\EntityManagerInterface;
+use Setono\DoctrineORMBatcher\Factory\BatcherFactory;
+use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
+
+class ProcessEnabledProductBatchMessage
+{
+    /** @var CollectionBatch */
+    private $batch;
+    
+    public function __construct(CollectionBatch $batch)
+    {
+        $this->batch = $batch;        
+    }
+    
+    public function getBatch(): CollectionBatch
+    {
+        return $this->batch;
+    }
+}
+
+/** @var EntityManagerInterface $em */
+$qb = $em->createQueryBuilder();
+$qb->select('o')
+    ->from(Product::class, 'o')
+    ->where('o.enabled = 1')
+;
+$factory = new BatcherFactory();
+$idCollectionBatcher = $factory->createIdCollectionBatcher($qb);
+
+/** @var CollectionBatch[] $batches */
+$batches = $idCollectionBatcher->getBatches(50);
+foreach ($batches as $batch) {
+    /** @var Product $product */
+    foreach ($batch->getCollection() as $product) {
+        // process $product
+    }
+}
+```
 
 ## Framework integration
 - [Symfony bundle](https://github.com/Setono/DoctrineORMBatcherBundle)
