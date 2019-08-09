@@ -32,10 +32,8 @@ final class RangeBatch extends Batch implements RangeBatchInterface
         $this->lowerBound = $lowerBound;
         $this->upperBound = $upperBound;
 
-        $qb->setParameters([
-            self::PARAMETER_LOWER_BOUND => $this->getLowerBound(),
-            self::PARAMETER_UPPER_BOUND => $this->getUpperBound(),
-        ]);
+        $qb->setParameter(self::PARAMETER_LOWER_BOUND, $this->getLowerBound());
+        $qb->setParameter(self::PARAMETER_UPPER_BOUND, $this->getUpperBound());
 
         parent::__construct($qb);
     }

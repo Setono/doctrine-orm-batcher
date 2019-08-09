@@ -17,9 +17,7 @@ final class CollectionBatch extends Batch implements CollectionBatchInterface
     {
         $this->collection = $collection;
 
-        $qb->setParameters([
-            self::PARAMETER_COLLECTION => $this->getCollection(),
-        ]);
+        $qb->setParameter(self::PARAMETER_COLLECTION, $this->getCollection());
 
         parent::__construct($qb);
     }
