@@ -19,13 +19,16 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
     /**
      * @return iterable<RangeBatchInterface>
      *
-     * @throws NoResultException
      * @throws StringsException
      */
     public function getBatches(int $batchSize = 100): iterable
     {
-        $min = $this->getMin();
-        $max = $this->getMax();
+        try {
+            $min = $this->getMin();
+            $max = $this->getMax();
+        } catch (NoResultException $e) {
+            return;
+        }
 
         $batches = (int) ceil((($max - $min) + 1) / $batchSize);
 
@@ -43,7 +46,6 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
      * If the lowest id is 30 and the highest id is 190 the maximum number of rows is (190 - 30) + 1 = 161
      * If the number of rows is 145, then the sparseness is (161 - 145) / 161 * 100 = 9.94% and this method will return 10 in that case.
      *
-     * @throws NoResultException
      * @throws NonUniqueResultException
      * @throws StringsException
      */
@@ -53,7 +55,11 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
             $this->initCount();
         }
 
-        $bestPossibleCount = ($this->getMax() - $this->getMin()) + 1;
+        try {
+            $bestPossibleCount = ($this->getMax() - $this->getMin()) + 1;
+        } catch (NoResultException $e) {
+            return 0;
+        }
 
         return (int) round(($bestPossibleCount - $this->count) / $bestPossibleCount * 100);
     }
