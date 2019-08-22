@@ -14,5 +14,5 @@ interface BatcherFactoryInterface
 
     public function createObjectCollectionBatcher(QueryBuilder $qb, string $identifier = 'id', bool $clearOnBatch = true): CollectionBatcherInterface;
 
-    public function createBestIdRangeBatcher(QueryBuilder $qb, string $identifier = 'id', bool $clearOnBatch = true, int $sparsenessThreshold = 5): RangeBatcherInterface;
+    public function createIdRangeBatcher(QueryBuilder $qb, string $identifier = 'id', bool $clearOnBatch = true, int $sparsenessThreshold = 5): RangeBatcherInterface;
 }

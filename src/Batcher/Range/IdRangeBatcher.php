@@ -10,7 +10,7 @@ use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
 use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 
-final class IdRangeBatcher extends RangeBatcher implements IdRangeBatcherInterface
+final class IdRangeBatcher extends RangeBatcher
 {
     /**
      * @return iterable<RangeBatchInterface>

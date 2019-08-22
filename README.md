@@ -51,6 +51,10 @@ Now inject that query builder into the id range batcher and dispatch a message:
 ```php
 <?php
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
+use Setono\DoctrineORMBatcher\Batcher\Collection\ObjectCollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Collection\IdCollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcher;
 use Setono\DoctrineORMBatcher\Factory\BatcherFactory;
 
 class ProcessProductBatchMessage
@@ -68,11 +72,16 @@ class ProcessProductBatchMessage
     }
 }
 
-$factory = new BatcherFactory();
-$bestChoiceIdBatcher = $factory->createBestIdRangeBatcher($qb);
+$factory = new BatcherFactory(
+    ObjectCollectionBatcher::class,
+    IdCollectionBatcher::class,
+    NaiveIdRangeBatcher::class,
+    IdRangeBatcher::class
+);
+$idRangeBatcher = $factory->createIdRangeBatcher($qb);
 
 /** @var RangeBatch[] $batches */
-$batches = $bestChoiceIdBatcher->getBatches(50);
+$batches = $idRangeBatcher->getBatches(50);
 foreach ($batches as $batch) {
     $commandBus->dispatch(new ProcessProductBatchMessage($batch));
 }
@@ -115,6 +124,10 @@ You want to process only enabled `Product` entities.
 use Doctrine\ORM\EntityManagerInterface;
 use Setono\DoctrineORMBatcher\Factory\BatcherFactory;
 use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
+use Setono\DoctrineORMBatcher\Batcher\Collection\ObjectCollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Collection\IdCollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcher;
 
 class ProcessEnabledProductBatchMessage
 {
@@ -138,7 +151,12 @@ $qb->select('o')
     ->from(Product::class, 'o')
     ->where('o.enabled = 1')
 ;
-$factory = new BatcherFactory();
+$factory = new BatcherFactory(
+    ObjectCollectionBatcher::class,
+    IdCollectionBatcher::class,
+    NaiveIdRangeBatcher::class,
+    IdRangeBatcher::class
+);
 $idCollectionBatcher = $factory->createIdCollectionBatcher($qb);
 
 /** @var CollectionBatch[] $batches */
@@ -183,22 +201,10 @@ You want to immediately process only enabled `Product` entities.
 use Doctrine\ORM\EntityManagerInterface;
 use Setono\DoctrineORMBatcher\Factory\BatcherFactory;
 use Setono\DoctrineORMBatcher\Batch\CollectionBatch;
-
-class ProcessEnabledProductBatchMessage
-{
-    /** @var CollectionBatch */
-    private $batch;
-    
-    public function __construct(CollectionBatch $batch)
-    {
-        $this->batch = $batch;        
-    }
-    
-    public function getBatch(): CollectionBatch
-    {
-        return $this->batch;
-    }
-}
+use Setono\DoctrineORMBatcher\Batcher\Collection\ObjectCollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Collection\IdCollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcher;
 
 /** @var EntityManagerInterface $em */
 $qb = $em->createQueryBuilder();
@@ -206,11 +212,16 @@ $qb->select('o')
     ->from(Product::class, 'o')
     ->where('o.enabled = 1')
 ;
-$factory = new BatcherFactory();
-$idCollectionBatcher = $factory->createIdCollectionBatcher($qb);
+$factory = new BatcherFactory(
+    ObjectCollectionBatcher::class,
+    IdCollectionBatcher::class,
+    NaiveIdRangeBatcher::class,
+    IdRangeBatcher::class
+);
+$collectionBatcher = $factory->createObjectCollectionBatcher($qb);
 
 /** @var CollectionBatch[] $batches */
-$batches = $idCollectionBatcher->getBatches(50);
+$batches = $collectionBatcher->getBatches(50);
 foreach ($batches as $batch) {
     /** @var Product $product */
     foreach ($batch->getCollection() as $product) {

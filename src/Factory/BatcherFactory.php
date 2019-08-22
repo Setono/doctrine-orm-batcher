@@ -6,21 +6,41 @@ namespace Setono\DoctrineORMBatcher\Factory;
 
 use Doctrine\ORM\QueryBuilder;
 use Setono\DoctrineORMBatcher\Batcher\Collection\CollectionBatcherInterface;
-use Setono\DoctrineORMBatcher\Batcher\Collection\IdCollectionBatcher;
-use Setono\DoctrineORMBatcher\Batcher\Collection\ObjectCollectionBatcher;
-use Setono\DoctrineORMBatcher\Batcher\Range\BestIdRangeBatcher;
-use Setono\DoctrineORMBatcher\Batcher\Range\IdRangeBatcher;
-use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Range\NaiveIdRangeBatcherInterface;
 use Setono\DoctrineORMBatcher\Batcher\Range\RangeBatcherInterface;
 
 final class BatcherFactory implements BatcherFactoryInterface
 {
+    /** @var string */
+    private $objectCollectionBatcherClass;
+
+    /** @var string */
+    private $idCollectionBatcherClass;
+
+    /** @var string */
+    private $naiveIdRangeBatcherClass;
+
+    /** @var string */
+    private $idRangeBatcherClass;
+
+    public function __construct(
+        string $objectCollectionBatcherClass,
+        string $idCollectionBatcherClass,
+        string $naiveIdRangeBatcherClass,
+        string $idRangeBatcherClass
+    ) {
+        $this->objectCollectionBatcherClass = $objectCollectionBatcherClass;
+        $this->idCollectionBatcherClass = $idCollectionBatcherClass;
+        $this->naiveIdRangeBatcherClass = $naiveIdRangeBatcherClass;
+        $this->idRangeBatcherClass = $idRangeBatcherClass;
+    }
+
     public function createObjectCollectionBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',
         bool $clearOnBatch = true
     ): CollectionBatcherInterface {
-        return new ObjectCollectionBatcher($qb, $identifier, $clearOnBatch);
+        return new $this->objectCollectionBatcherClass($qb, $identifier, $clearOnBatch);
     }
 
     public function createIdCollectionBatcher(
@@ -28,18 +48,21 @@ final class BatcherFactory implements BatcherFactoryInterface
         string $identifier = 'id',
         bool $clearOnBatch = true
     ): CollectionBatcherInterface {
-        return new IdCollectionBatcher($qb, $identifier, $clearOnBatch);
+        return new $this->idCollectionBatcherClass($qb, $identifier, $clearOnBatch);
     }
 
-    public function createBestIdRangeBatcher(
+    public function createIdRangeBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',
         bool $clearOnBatch = true,
         int $sparsenessThreshold = 5
     ): RangeBatcherInterface {
-        $naiveIdBatcher = new NaiveIdRangeBatcher($qb, $identifier, $clearOnBatch);
-        $realIdBatcher = new IdRangeBatcher($qb, $identifier, $clearOnBatch);
+        /** @var NaiveIdRangeBatcherInterface $naiveIdBatcher */
+        $naiveIdBatcher = new $this->naiveIdRangeBatcherClass($qb, $identifier, $clearOnBatch);
+        if ($naiveIdBatcher->getSparseness() <= $sparsenessThreshold) {
+            return $naiveIdBatcher;
+        }
 
-        return new BestIdRangeBatcher($naiveIdBatcher, $realIdBatcher, $sparsenessThreshold);
+        return new $this->idRangeBatcherClass($qb, $identifier, $clearOnBatch);
     }
 }
