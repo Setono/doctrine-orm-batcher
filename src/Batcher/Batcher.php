@@ -65,6 +65,10 @@ abstract class Batcher implements BatcherInterface
         ;
     }
 
+    public function getBatchCount(int $batchSize = 100): int
+    {
+    }
+
     /**
      * @throws NonUniqueResultException
      * @throws StringsException
