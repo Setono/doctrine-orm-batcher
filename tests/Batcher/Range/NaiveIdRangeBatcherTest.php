@@ -10,6 +10,8 @@ use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
 final class NaiveIdRangeBatcherTest extends EntityManagerAwareTestCase
 {
+    private const BATCH_SIZE = 10;
+
     /**
      * @test
      */
@@ -25,6 +27,8 @@ final class NaiveIdRangeBatcherTest extends EntityManagerAwareTestCase
 
         $batcher = $this->getBatcher();
 
+        $this->assertSame(5, $batcher->getBatchCount(self::BATCH_SIZE));
+
         $expected = [
             ['lowerBound' => 10, 'upperBound' => 19],
             ['lowerBound' => 20, 'upperBound' => 29],
@@ -33,7 +37,7 @@ final class NaiveIdRangeBatcherTest extends EntityManagerAwareTestCase
             ['lowerBound' => 50, 'upperBound' => 52],
         ];
 
-        $batches = $batcher->getBatches(10);
+        $batches = $batcher->getBatches(self::BATCH_SIZE);
 
         foreach ($batches as $idx => $batch) {
             $this->assertSame($expected[$idx]['lowerBound'], $batch->getLowerBound());
