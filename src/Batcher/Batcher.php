@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\DoctrineORMBatcher\Batcher;
 
 use Doctrine\Common\Persistence\Mapping\MappingException;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
@@ -33,6 +34,9 @@ abstract class Batcher implements BatcherInterface
     /** @var int */
     private $max;
 
+    /** @var int */
+    private $count;
+
     /** @var PropertyAccessorInterface */
     private $propertyAccessor;
 
@@ -59,6 +63,10 @@ abstract class Batcher implements BatcherInterface
             ->enableExceptionOnInvalidPropertyPath()
             ->getPropertyAccessor()
         ;
+    }
+
+    public function getBatchCount(int $batchSize = 100): int
+    {
     }
 
     /**
@@ -156,6 +164,19 @@ abstract class Batcher implements BatcherInterface
     }
 
     /**
+     * @throws NonUniqueResultException
+     * @throws StringsException
+     */
+    protected function getCount(): int
+    {
+        if (null === $this->count) {
+            $this->initCount();
+        }
+
+        return $this->count;
+    }
+
+    /**
      * @throws NoResultException
      * @throws StringsException
      */
@@ -178,5 +199,17 @@ abstract class Batcher implements BatcherInterface
 
         $this->min = (int) $row['min'];
         $this->max = (int) $row['max'];
+    }
+
+    /**
+     * @throws StringsException
+     * @throws NonUniqueResultException
+     */
+    private function initCount(): void
+    {
+        $qb = $this->getQueryBuilder();
+        $qb->select(sprintf('COUNT(%s) as c', $this->alias));
+
+        $this->count = (int) $qb->getQuery()->getSingleScalarResult();
     }
 }
