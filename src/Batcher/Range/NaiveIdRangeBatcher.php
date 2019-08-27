@@ -7,7 +7,6 @@ namespace Setono\DoctrineORMBatcher\Batcher\Range;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Safe\Exceptions\StringsException;
-use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
 use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 
@@ -51,28 +50,12 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
      */
     public function getSparseness(): int
     {
-        if (null === $this->count) {
-            $this->initCount();
-        }
-
         try {
             $bestPossibleCount = ($this->getMax() - $this->getMin()) + 1;
         } catch (NoResultException $e) {
             return 0;
         }
 
-        return (int) round(($bestPossibleCount - $this->count) / $bestPossibleCount * 100);
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     * @throws StringsException
-     */
-    private function initCount(): void
-    {
-        $qb = $this->getQueryBuilder();
-        $qb->select(sprintf('COUNT(%s) as c', $this->alias));
-
-        $this->count = (int) $qb->getQuery()->getSingleScalarResult();
+        return (int) round(($bestPossibleCount - $this->getCount()) / $bestPossibleCount * 100);
     }
 }

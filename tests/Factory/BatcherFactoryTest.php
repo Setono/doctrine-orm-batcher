@@ -30,6 +30,11 @@ final class BatcherFactoryTest extends EntityManagerAwareTestCase
             {
                 return [];
             }
+
+            public function getBatchCount(int $batchSize = 100): int
+            {
+                return 0;
+            }
         };
 
         $factory = new BatcherFactory('', '', get_class($cls), '');
@@ -56,6 +61,11 @@ final class BatcherFactoryTest extends EntityManagerAwareTestCase
             {
                 return [];
             }
+
+            public function getBatchCount(int $batchSize = 100): int
+            {
+                return 0;
+            }
         };
 
         $idBatcher = new class() implements RangeBatcherInterface {
@@ -67,6 +77,11 @@ final class BatcherFactoryTest extends EntityManagerAwareTestCase
             public function getBatches(int $batchSize = 100): iterable
             {
                 return [];
+            }
+
+            public function getBatchCount(int $batchSize = 100): int
+            {
+                return 0;
             }
         };
 

@@ -12,4 +12,9 @@ interface BatcherInterface
      * @return iterable<BatchInterface>
      */
     public function getBatches(int $batchSize = 100): iterable;
+
+    /**
+     * Returns the number of batches that will be returned.
+     */
+    public function getBatchCount(int $batchSize = 100): int;
 }
