@@ -1,10 +1,9 @@
 # Doctrine ORM Batcher library
 
-![Packagist Version](https://img.shields.io/packagist/v/setono/doctrine-orm-batcher.svg?color=brightgreen&label=latest%20release)
-![Packagist Pre Release Version](https://img.shields.io/packagist/vpre/setono/doctrine-orm-batcher.svg?label=unstable)
-![Packagist](https://img.shields.io/packagist/l/setono/doctrine-orm-batcher.svg?color=blue)
-![Travis (.com)](https://img.shields.io/travis/com/setono/doctrine-orm-batcher.svg)
-![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/setono/doctrine-orm-batcher.svg)
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE)
+[![Build Status][ico-github-actions]][link-github-actions]
+[![Quality Score][ico-code-quality]][link-code-quality]
 
 Use this library when you need to process large amounts of entities and maybe in an asynchronous way.
 
@@ -233,12 +232,11 @@ foreach ($batches as $batch) {
 ## Framework integration
 - [Symfony bundle](https://github.com/Setono/DoctrineORMBatcherBundle)
 
-[ico-version]: https://poser.pugx.org/setono/doctrine-orm-batcher/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/doctrine-orm-batcher/v/unstable
-[ico-license]: https://poser.pugx.org/setono/doctrine-orm-batcher/license
-[ico-travis]: https://travis-ci.com/Setono/doctrine-orm-batcher.svg?branch=master
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/doctrine-orm-batcher.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/setono/doctrine-orm-batcher.svg
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
+[ico-github-actions]: https://github.com/Setono/doctrine-orm-batcher/workflows/Build/badge.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/doctrine-orm-batcher.svg
 
 [link-packagist]: https://packagist.org/packages/setono/doctrine-orm-batcher
-[link-travis]: https://travis-ci.com/Setono/doctrine-orm-batcher
+[link-github-actions]: https://github.com/Setono/doctrine-orm-batcher/actions
 [link-code-quality]: https://scrutinizer-ci.com/g/Setono/doctrine-orm-batcher
