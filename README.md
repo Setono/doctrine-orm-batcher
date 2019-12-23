@@ -234,7 +234,7 @@ foreach ($batches as $batch) {
 
 [ico-version]: https://img.shields.io/packagist/v/setono/doctrine-orm-batcher.svg
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
-[ico-github-actions]: https://github.com/Setono/doctrine-orm-batcher/workflows/Build/badge.svg
+[ico-github-actions]: https://github.com/Setono/doctrine-orm-batcher/workflows/build/badge.svg
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/doctrine-orm-batcher.svg
 
 [link-packagist]: https://packagist.org/packages/setono/doctrine-orm-batcher
