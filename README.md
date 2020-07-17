@@ -43,6 +43,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 $qb = $em->createQueryBuilder();
 $qb->select('o')->from(Product::class, 'o');
+
+# OR even simpler:
+# $qb = $productRepository->createQueryBuilder('o');
 ```
 
 Now inject that query builder into the id range batcher and dispatch a message:
