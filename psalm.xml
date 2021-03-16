@@ -7,10 +7,7 @@
 >
     <projectFiles>
         <directory name="src"/>
-
-        <!-- TODO include tests dir
         <directory name="tests"/>
-        -->
         <ignoreFiles>
             <directory name="vendor"/>
         </ignoreFiles>
