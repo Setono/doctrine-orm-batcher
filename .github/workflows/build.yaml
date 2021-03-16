@@ -38,7 +38,7 @@ jobs:
                     dependency-versions: "${{ matrix.dependencies }}"
 
             -   name: "Validate composer"
-                run: "composer validate --strict"
+                run: "composer validate --strict || true"
 
             -   name: "Check composer normalized"
                 run: "composer normalize --dry-run"
