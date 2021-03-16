@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Doctrine\Common\Persistence\Mapping\MappingException;
-use Safe\Exceptions\StringsException;
-use function Safe\sprintf;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
 use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 
@@ -14,9 +11,6 @@ final class IdRangeBatcher extends RangeBatcher
 {
     /**
      * @return iterable<RangeBatchInterface>
-     *
-     * @throws StringsException
-     * @throws MappingException
      */
     public function getBatches(int $batchSize = 100): iterable
     {

@@ -5,20 +5,13 @@ declare(strict_types=1);
 namespace Setono\DoctrineORMBatcher\Exception;
 
 use InvalidArgumentException;
-use Safe\Exceptions\StringsException;
-use function Safe\sprintf;
 
 final class LowerBoundIsGreaterThanUpperBoundException extends InvalidArgumentException implements ExceptionInterface
 {
-    /** @var int */
-    private $lowerBound;
+    private int $lowerBound;
 
-    /** @var int */
-    private $upperBound;
+    private int $upperBound;
 
-    /**
-     * @throws StringsException
-     */
     public function __construct(int $lowerBound, int $upperBound)
     {
         parent::__construct(sprintf('The lower bound, %d, is greater than the upper bound, %d', $lowerBound, $upperBound));

@@ -1,7 +1,6 @@
 /vendor/
 /composer.lock
 
-/phpspec.yml
 /.phpunit.result.cache
 /tests/db.sqlite
-/build/
+/.build/

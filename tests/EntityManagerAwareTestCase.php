@@ -23,11 +23,11 @@ abstract class EntityManagerAwareTestCase extends TestCase
     {
         parent::setUp();
 
-        $config = Setup::createAnnotationMetadataConfiguration([__DIR__.'/Entity'], true);
+        $config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/Entity'], true);
 
         $this->entityManager = EntityManager::create([
             'driver' => 'pdo_sqlite',
-            'path' => __DIR__.'/db.sqlite',
+            'path' => __DIR__ . '/db.sqlite',
         ], $config);
 
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();

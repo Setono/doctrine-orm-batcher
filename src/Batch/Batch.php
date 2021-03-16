@@ -9,14 +9,11 @@ use InvalidArgumentException;
 
 abstract class Batch implements BatchInterface
 {
-    /** @var string */
-    protected $class;
+    protected string $class;
 
-    /** @var string */
-    protected $dql;
+    protected string $dql;
 
-    /** @var array */
-    protected $parameters;
+    protected array $parameters;
 
     public function __construct(QueryBuilder $qb)
     {
