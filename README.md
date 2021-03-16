@@ -3,7 +3,6 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
 [![Build Status][ico-github-actions]][link-github-actions]
-[![Quality Score][ico-code-quality]][link-code-quality]
 
 Use this library when you need to process large amounts of entities and maybe in an asynchronous way.
 
@@ -238,8 +237,6 @@ foreach ($batches as $batch) {
 [ico-version]: https://img.shields.io/packagist/v/setono/doctrine-orm-batcher.svg
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [ico-github-actions]: https://github.com/Setono/doctrine-orm-batcher/workflows/build/badge.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/doctrine-orm-batcher.svg
 
 [link-packagist]: https://packagist.org/packages/setono/doctrine-orm-batcher
 [link-github-actions]: https://github.com/Setono/doctrine-orm-batcher/actions
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/doctrine-orm-batcher

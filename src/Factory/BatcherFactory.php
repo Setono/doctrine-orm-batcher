@@ -11,17 +11,13 @@ use Setono\DoctrineORMBatcher\Batcher\Range\RangeBatcherInterface;
 
 final class BatcherFactory implements BatcherFactoryInterface
 {
-    /** @var string */
-    private $objectCollectionBatcherClass;
+    private string $objectCollectionBatcherClass;
 
-    /** @var string */
-    private $idCollectionBatcherClass;
+    private string $idCollectionBatcherClass;
 
-    /** @var string */
-    private $naiveIdRangeBatcherClass;
+    private string $naiveIdRangeBatcherClass;
 
-    /** @var string */
-    private $idRangeBatcherClass;
+    private string $idRangeBatcherClass;
 
     public function __construct(
         string $objectCollectionBatcherClass,

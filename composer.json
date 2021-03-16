@@ -1,7 +1,7 @@
 {
     "name": "setono/doctrine-orm-batcher",
     "type": "library",
-    "description": "A library for processing large collections",
+    "description": "A library for processing large collections in Doctrine",
     "license": "MIT",
     "authors": [
         {
@@ -10,19 +10,20 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
+        "doctrine/collections": "^1.6",
         "doctrine/orm": "^2.6",
-        "symfony/property-access": "^4.3 || ^5.0",
-        "thecodingmachine/safe": "^1.0"
+        "doctrine/persistence": "^1.3 || ^2.1",
+        "symfony/property-access": "^4.4 || ^5.2",
+        "webmozart/assert": "^1.10"
     },
     "require-dev": {
-        "doctrine/data-fixtures": "^1.3",
-        "ergebnis/composer-normalize": "^2.1.1",
-        "phpstan/phpstan": "^0.12",
-        "phpstan/phpstan-strict-rules": "^0.12",
-        "phpunit/phpunit": "^8.2",
-        "symplify/easy-coding-standard": "^7.0",
-        "thecodingmachine/phpstan-safe-rule": "^1.0@beta"
+        "doctrine/data-fixtures": "^1.5",
+        "doctrine/orm": "^2.8",
+        "phpunit/phpunit": "^9.5.2",
+        "psalm/plugin-phpunit": "^0.15.1",
+        "setono/code-quality-pack": "^2.0",
+        "weirdan/doctrine-psalm-plugin": "^1.0"
     },
     "config": {
         "sort-packages": true
@@ -43,12 +44,9 @@
         }
     },
     "scripts": {
-        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon -l max src/",
-        "check-style": "vendor/bin/ecs check --ansi src/ tests/",
-        "fix-style": "vendor/bin/ecs check --ansi src/ tests/ --fix",
-        "phpunit": "vendor/bin/phpunit",
-        "test": [
-            "@phpunit"
-        ]
+        "analyse": "psalm",
+        "check-style": "ecs check",
+        "fix-style": "ecs check --fix",
+        "phpunit": "phpunit"
     }
 }

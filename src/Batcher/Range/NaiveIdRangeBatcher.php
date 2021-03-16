@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher\Range;
 
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Batch\RangeBatch;
 use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 
 final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatcherInterface
 {
-    /** @var int */
-    private $count;
+    private int $count;
 
     /**
      * @return iterable<RangeBatchInterface>
-     *
-     * @throws StringsException
      */
     public function getBatches(int $batchSize = 100): iterable
     {
@@ -44,9 +39,6 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
     /**
      * If the lowest id is 30 and the highest id is 190 the maximum number of rows is (190 - 30) + 1 = 161
      * If the number of rows is 145, then the sparseness is (161 - 145) / 161 * 100 = 9.94% and this method will return 10 in that case.
-     *
-     * @throws NonUniqueResultException
-     * @throws StringsException
      */
     public function getSparseness(): int
     {

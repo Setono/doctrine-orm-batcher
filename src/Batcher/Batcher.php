@@ -4,41 +4,30 @@ declare(strict_types=1);
 
 namespace Setono\DoctrineORMBatcher\Batcher;
 
-use Doctrine\Common\Persistence\Mapping\MappingException;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
-use Safe\Exceptions\StringsException;
-use function Safe\sprintf;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Webmozart\Assert\Assert;
 
 abstract class Batcher implements BatcherInterface
 {
-    /** @var QueryBuilder */
-    private $qb;
+    private QueryBuilder $qb;
 
-    /** @var string */
-    protected $identifier;
+    protected string $identifier;
 
-    /** @var bool */
-    private $clearOnBatch;
+    private bool $clearOnBatch;
 
-    /** @var string */
-    protected $alias;
+    protected string $alias;
 
-    /** @var int */
-    private $min;
+    private ?int $min = null;
 
-    /** @var int */
-    private $max;
+    private ?int $max = null;
 
-    /** @var int */
-    private $count;
+    private ?int $count = null;
 
-    /** @var PropertyAccessorInterface */
-    private $propertyAccessor;
+    private PropertyAccessorInterface $propertyAccessor;
 
     /**
      * @param QueryBuilder $qb           The query builder you have built for fetching objects
@@ -65,10 +54,6 @@ abstract class Batcher implements BatcherInterface
         ;
     }
 
-    /**
-     * @throws NonUniqueResultException
-     * @throws StringsException
-     */
     public function getBatchCount(int $batchSize = 100): int
     {
         return (int) ceil($this->getCount() / $batchSize);
@@ -77,9 +62,6 @@ abstract class Batcher implements BatcherInterface
     /**
      * Notice that the $select must include the identifier in some way.
      * If the $select is null the original select statement will be used.
-     *
-     * @throws MappingException
-     * @throws StringsException
      */
     protected function getResult(string $select = null, int $batchSize = 100): iterable
     {
@@ -117,9 +99,6 @@ abstract class Batcher implements BatcherInterface
         $this->clear();
     }
 
-    /**
-     * @throws MappingException
-     */
     private function clear(): void
     {
         if (!$this->clearOnBatch) {
@@ -142,49 +121,39 @@ abstract class Batcher implements BatcherInterface
      */
     abstract protected function getBatchableQueryBuilder(): QueryBuilder;
 
-    /**
-     * @throws NoResultException
-     * @throws StringsException
-     */
     protected function getMin(): int
     {
         if (null === $this->min) {
             $this->initMinMax();
         }
 
+        Assert::notNull($this->min);
+
         return $this->min;
     }
 
-    /**
-     * @throws NoResultException
-     * @throws StringsException
-     */
     protected function getMax(): int
     {
         if (null === $this->max) {
             $this->initMinMax();
         }
 
+        Assert::notNull($this->max);
+
         return $this->max;
     }
 
-    /**
-     * @throws NonUniqueResultException
-     * @throws StringsException
-     */
     protected function getCount(): int
     {
         if (null === $this->count) {
             $this->initCount();
         }
 
+        Assert::notNull($this->count);
+
         return $this->count;
     }
 
-    /**
-     * @throws NoResultException
-     * @throws StringsException
-     */
     private function initMinMax(): void
     {
         $qb = $this->getQueryBuilder();
@@ -206,10 +175,6 @@ abstract class Batcher implements BatcherInterface
         $this->max = (int) $row['max'];
     }
 
-    /**
-     * @throws StringsException
-     * @throws NonUniqueResultException
-     */
     private function initCount(): void
     {
         $qb = $this->getQueryBuilder();

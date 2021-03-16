@@ -10,8 +10,7 @@ final class CollectionBatch extends Batch implements CollectionBatchInterface
 {
     public const PARAMETER_COLLECTION = 'collection';
 
-    /** @var array */
-    private $collection;
+    private array $collection;
 
     public function __construct(array $collection, QueryBuilder $qb)
     {
@@ -19,6 +18,7 @@ final class CollectionBatch extends Batch implements CollectionBatchInterface
 
         $qb->setParameter(self::PARAMETER_COLLECTION, $this->getCollection());
 
+        /** @psalm-suppress ImpureMethodCall */
         parent::__construct($qb);
     }
 

@@ -13,21 +13,19 @@ use PHPUnit\Framework\TestCase;
 
 abstract class EntityManagerAwareTestCase extends TestCase
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /** @var ORMPurger */
-    protected $purger;
+    protected ORMPurger $purger;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $config = Setup::createAnnotationMetadataConfiguration([__DIR__.'/Entity'], true);
+        $config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/Entity'], true);
 
         $this->entityManager = EntityManager::create([
             'driver' => 'pdo_sqlite',
-            'path' => __DIR__.'/db.sqlite',
+            'path' => __DIR__ . '/db.sqlite',
         ], $config);
 
         $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();

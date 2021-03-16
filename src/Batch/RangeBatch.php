@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Setono\DoctrineORMBatcher\Batch;
 
 use Doctrine\ORM\QueryBuilder;
-use Safe\Exceptions\StringsException;
 use Setono\DoctrineORMBatcher\Exception\LowerBoundIsGreaterThanUpperBoundException;
 
 final class RangeBatch extends Batch implements RangeBatchInterface
@@ -14,15 +13,10 @@ final class RangeBatch extends Batch implements RangeBatchInterface
 
     public const PARAMETER_UPPER_BOUND = 'upperBound';
 
-    /** @var int */
-    private $lowerBound;
+    private int $lowerBound;
 
-    /** @var int */
-    private $upperBound;
+    private int $upperBound;
 
-    /**
-     * @throws StringsException
-     */
     public function __construct(int $lowerBound, int $upperBound, QueryBuilder $qb)
     {
         if ($lowerBound > $upperBound) {
@@ -35,6 +29,7 @@ final class RangeBatch extends Batch implements RangeBatchInterface
         $qb->setParameter(self::PARAMETER_LOWER_BOUND, $this->getLowerBound());
         $qb->setParameter(self::PARAMETER_UPPER_BOUND, $this->getUpperBound());
 
+        /** @psalm-suppress ImpureMethodCall */
         parent::__construct($qb);
     }
 
