@@ -13,11 +13,9 @@ use PHPUnit\Framework\TestCase;
 
 abstract class EntityManagerAwareTestCase extends TestCase
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /** @var ORMPurger */
-    protected $purger;
+    protected ORMPurger $purger;
 
     public function setUp(): void
     {

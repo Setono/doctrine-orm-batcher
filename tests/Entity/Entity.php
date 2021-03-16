@@ -13,17 +13,11 @@ class Entity
     /**
      * @Id()
      * @Column(type="integer")
-     *
-     * @var int
      */
-    protected $id;
+    protected int $id;
 
-    /**
-     * @Column(type="boolean")
-     *
-     * @var bool
-     */
-    protected $enabled;
+    /** @Column(type="boolean") */
+    protected bool $enabled;
 
     public function __construct(int $id, bool $enabled = true)
     {
