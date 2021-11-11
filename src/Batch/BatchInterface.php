@@ -6,6 +6,8 @@ namespace Setono\DoctrineORMBatcher\Batch;
 
 interface BatchInterface
 {
+    public function getData(): array;
+
     /**
      * This is the root entity that can be used to get the entity manager from the manager registry.
      */
