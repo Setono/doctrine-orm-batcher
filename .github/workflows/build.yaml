@@ -3,9 +3,12 @@ on:
     push:
         branches:
             - "master"
-    pull_request: ~
-    schedule:
-        - cron: "5 8 * * 1"
+        paths-ignore:
+            - "*.md"
+    pull_request:
+        paths-ignore:
+            - "*.md"
+    workflow_dispatch: ~
 
 jobs:
     coding-standards:
