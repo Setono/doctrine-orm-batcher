@@ -22,7 +22,7 @@
         "doctrine/orm": "^2.8",
         "phpunit/phpunit": "^9.5.2",
         "psalm/plugin-phpunit": "^0.15.1",
-        "setono/code-quality-pack": "^2.0",
+        "setono/code-quality-pack": "^2.1",
         "weirdan/doctrine-psalm-plugin": "^1.0"
     },
     "config": {
