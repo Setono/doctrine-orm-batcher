@@ -21,7 +21,7 @@
         "doctrine/data-fixtures": "^1.5",
         "doctrine/orm": "^2.8",
         "phpunit/phpunit": "^9.5.2",
-        "psalm/plugin-phpunit": "^0.15.1",
+        "psalm/plugin-phpunit": "^0.16.1",
         "setono/code-quality-pack": "^2.0",
         "weirdan/doctrine-psalm-plugin": "^1.0"
     },
