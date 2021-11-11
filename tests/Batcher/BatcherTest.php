@@ -2,18 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Setono\DoctrineORMBatcher\Batcher\Collection;
+namespace Tests\Setono\DoctrineORMBatcher\Batcher;
 
-use Setono\DoctrineORMBatcher\Batcher\Collection\ObjectCollectionBatcher;
+use Setono\DoctrineORMBatcher\Batcher\Batcher;
 use Tests\Setono\DoctrineORMBatcher\Entity\Entity;
 use Tests\Setono\DoctrineORMBatcher\EntityManagerAwareTestCase;
 
-final class ObjectCollectionBatcherTest extends EntityManagerAwareTestCase
+/**
+ * @covers \Setono\DoctrineORMBatcher\Batcher\Batcher
+ */
+final class BatcherTest extends EntityManagerAwareTestCase
 {
     /**
      * @test
      */
-    public function it_works(): void
+    public function it_batches(): void
     {
         $this->purger->purge();
 
@@ -52,17 +55,14 @@ final class ObjectCollectionBatcherTest extends EntityManagerAwareTestCase
             ->from(Entity::class, 'o')
             ->andWhere('o.enabled = 1')
         ;
+        $batcher = new Batcher($qb);
 
-        $batcher = new ObjectCollectionBatcher($qb);
-
-        $batches = $batcher->getBatches(10);
-
-        foreach ($batches as $idx => $batch) {
-            /** @var Entity $entity */
-            foreach ($batch->getCollection() as $entity) {
+        foreach ($batcher->getBatches() as $batch) {
+            /** @var Entity $item */
+            foreach ($batch->getData() as $item) {
                 $this->assertArrayHasKey($entity->getId(), $expectedIds);
 
-                $expectedIds[$entity->getId()] = true;
+                $expectedIds[$item->getId()] = true;
             }
         }
 
