@@ -23,7 +23,7 @@
         "phpunit/phpunit": "^9.5.10",
         "psalm/plugin-phpunit": "^0.16.1",
         "setono/code-quality-pack": "^2.1.3",
-        "symfony/cache": "^5.3",
+        "symfony/cache": "^5.4",
         "weirdan/doctrine-psalm-plugin": "^2.0"
     },
     "config": {
