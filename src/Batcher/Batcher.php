@@ -62,6 +62,8 @@ abstract class Batcher implements BatcherInterface
     /**
      * Notice that the $select must include the identifier in some way.
      * If the $select is null the original select statement will be used.
+     *
+     * @psalm-suppress ReservedWord
      */
     protected function getResult(string $select = null, int $batchSize = 100): iterable
     {

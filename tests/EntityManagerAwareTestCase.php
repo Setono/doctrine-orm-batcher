@@ -7,8 +7,8 @@ namespace Tests\Setono\DoctrineORMBatcher;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Tools\Setup;
 use PHPUnit\Framework\TestCase;
 
 abstract class EntityManagerAwareTestCase extends TestCase
@@ -21,7 +21,7 @@ abstract class EntityManagerAwareTestCase extends TestCase
     {
         parent::setUp();
 
-        $config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/Entity'], true);
+        $config = ORMSetup::createAnnotationMetadataConfiguration([__DIR__ . '/Entity'], true);
 
         $this->entityManager = EntityManager::create([
             'driver' => 'pdo_sqlite',
