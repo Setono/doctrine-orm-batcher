@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Tests\Setono\DoctrineORMBatcher\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity()
- * @Table(name="entity")
+ * @ORM\Entity()
+ *
+ * @ORM\Table(name="entity")
  */
 class Entity
 {
     /**
-     * @Id()
-     * @Column(type="integer")
+     * @ORM\Id()
+     *
+     * @ORM\Column(type="integer")
      */
     protected int $id;
 
-    /** @Column(type="boolean") */
+    /** @ORM\Column(type="boolean") */
     protected bool $enabled;
 
     public function __construct(int $id, bool $enabled = true)
