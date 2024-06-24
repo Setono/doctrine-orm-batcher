@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="entity")
  */
+#[ORM\Entity]
+#[ORM\Table('entity')]
 class Entity
 {
     /**
@@ -18,9 +20,12 @@ class Entity
      *
      * @ORM\Column(type="integer")
      */
+    #[ORM\Id()]
+    #[ORM\Column('integer')]
     protected int $id;
 
     /** @ORM\Column(type="boolean") */
+    #[ORM\Column('boolean')]
     protected bool $enabled;
 
     public function __construct(int $id, bool $enabled = true)
