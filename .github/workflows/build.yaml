@@ -121,7 +121,7 @@ jobs:
                     dependency-versions: "${{ matrix.dependencies }}"
 
             -   name: "Static analysis"
-                run: "composer analyse"
+                run: "composer analyse -- --php-version=${{ matrix.php-version }}"
 
     unit-tests:
         name: "Unit tests"
