@@ -57,7 +57,7 @@ final class ObjectCollectionBatcherTest extends EntityManagerAwareTestCase
 
         $batches = $batcher->getBatches(10);
 
-        foreach ($batches as $idx => $batch) {
+        foreach ($batches as $batch) {
             /** @var Entity $entity */
             foreach ($batch->getCollection() as $entity) {
                 $this->assertArrayHasKey($entity->getId(), $expectedIds);

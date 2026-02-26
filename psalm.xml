@@ -16,4 +16,20 @@
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
         <pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
     </plugins>
+    <issueHandlers>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <file name="src/Exception/LowerBoundIsGreaterThanUpperBoundException.php"/>
+                <file name="src/Exception/NoManagerException.php"/>
+                <file name="src/Factory/BatcherFactoryInterface.php"/>
+                <file name="src/Query/QueryRebuilderInterface.php"/>
+                <file name="tests/Entity/Entity.php"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <file name="src/Query/QueryRebuilder.php"/>
+            </errorLevel>
+        </UnusedClass>
+    </issueHandlers>
 </psalm>

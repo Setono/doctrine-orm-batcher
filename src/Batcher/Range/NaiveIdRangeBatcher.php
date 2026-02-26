@@ -10,8 +10,6 @@ use Setono\DoctrineORMBatcher\Batch\RangeBatchInterface;
 
 final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatcherInterface
 {
-    private int $count;
-
     /**
      * @return iterable<RangeBatchInterface>
      */
@@ -46,10 +44,10 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
     {
         try {
             $bestPossibleCount = ($this->getMax() - $this->getMin()) + 1;
-        } catch (NoResultException $e) {
+        } catch (NoResultException) {
             return 0;
         }
 
-        return (int) round(($bestPossibleCount - $this->getCount()) / $bestPossibleCount * 100);
+        return (int) round((float) ($bestPossibleCount - $this->getCount()) / (float) $bestPossibleCount * 100.0);
     }
 }
