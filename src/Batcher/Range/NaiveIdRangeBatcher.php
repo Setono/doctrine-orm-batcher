@@ -15,6 +15,7 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
     /**
      * @return iterable<RangeBatchInterface>
      */
+    #[\Override]
     public function getBatches(int $batchSize = 100): iterable
     {
         try {
@@ -40,6 +41,7 @@ final class NaiveIdRangeBatcher extends RangeBatcher implements NaiveIdRangeBatc
      * If the lowest id is 30 and the highest id is 190 the maximum number of rows is (190 - 30) + 1 = 161
      * If the number of rows is 145, then the sparseness is (161 - 145) / 161 * 100 = 9.94% and this method will return 10 in that case.
      */
+    #[\Override]
     public function getSparseness(): int
     {
         try {

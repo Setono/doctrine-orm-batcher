@@ -19,6 +19,7 @@ abstract class EntityManagerAwareTestCase extends TestCase
 
     protected ORMPurger $purger;
 
+    #[\Override]
     public function setUp(): void
     {
         parent::setUp();

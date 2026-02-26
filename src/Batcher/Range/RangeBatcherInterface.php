@@ -12,5 +12,6 @@ interface RangeBatcherInterface extends BatcherInterface
     /**
      * @return iterable<RangeBatchInterface>
      */
+    #[\Override]
     public function getBatches(int $batchSize = 100): iterable;
 }

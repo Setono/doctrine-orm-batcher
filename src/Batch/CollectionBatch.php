@@ -22,6 +22,7 @@ final class CollectionBatch extends Batch implements CollectionBatchInterface
         parent::__construct($qb);
     }
 
+    #[\Override]
     public function getCollection(): array
     {
         return $this->collection;

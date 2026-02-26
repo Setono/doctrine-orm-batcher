@@ -31,6 +31,7 @@ final class BatcherFactory implements BatcherFactoryInterface
         $this->idRangeBatcherClass = $idRangeBatcherClass;
     }
 
+    #[\Override]
     public function createObjectCollectionBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',
@@ -39,6 +40,7 @@ final class BatcherFactory implements BatcherFactoryInterface
         return new $this->objectCollectionBatcherClass($qb, $identifier, $clearOnBatch);
     }
 
+    #[\Override]
     public function createIdCollectionBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',
@@ -47,6 +49,7 @@ final class BatcherFactory implements BatcherFactoryInterface
         return new $this->idCollectionBatcherClass($qb, $identifier, $clearOnBatch);
     }
 
+    #[\Override]
     public function createIdRangeBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',

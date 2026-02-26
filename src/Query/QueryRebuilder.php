@@ -20,6 +20,7 @@ final class QueryRebuilder implements QueryRebuilderInterface
         $this->managerRegistry = $managerRegistry;
     }
 
+    #[\Override]
     public function rebuild(BatchInterface $batch): Query
     {
         $manager = $this->getManager($batch->getClass());

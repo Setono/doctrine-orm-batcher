@@ -10,6 +10,7 @@ use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
 abstract class CollectionBatcher extends Batcher implements CollectionBatcherInterface
 {
+    #[\Override]
     protected function getBatchableQueryBuilder(): QueryBuilder
     {
         $qb = $this->getQueryBuilder();

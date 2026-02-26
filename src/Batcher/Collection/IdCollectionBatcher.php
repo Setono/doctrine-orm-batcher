@@ -12,6 +12,7 @@ final class IdCollectionBatcher extends CollectionBatcher
     /**
      * @return iterable<CollectionBatchInterface>
      */
+    #[\Override]
     public function getBatches(int $batchSize = 100): iterable
     {
         $result = $this->getResult(sprintf('%s.%s', $this->alias, $this->identifier), $batchSize);

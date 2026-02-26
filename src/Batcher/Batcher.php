@@ -54,6 +54,7 @@ abstract class Batcher implements BatcherInterface
         ;
     }
 
+    #[\Override]
     public function getBatchCount(int $batchSize = 100): int
     {
         return (int) ceil($this->getCount() / $batchSize);
