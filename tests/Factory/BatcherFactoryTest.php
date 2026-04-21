@@ -21,16 +21,19 @@ final class BatcherFactoryTest extends EntityManagerAwareTestCase
         $qb = $this->createQb();
 
         $cls = new class() implements NaiveIdRangeBatcherInterface {
+            #[\Override]
             public function getSparseness(): int
             {
                 return 1;
             }
 
+            #[\Override]
             public function getBatches(int $batchSize = 100): iterable
             {
                 return [];
             }
 
+            #[\Override]
             public function getBatchCount(int $batchSize = 100): int
             {
                 return 0;
@@ -52,16 +55,19 @@ final class BatcherFactoryTest extends EntityManagerAwareTestCase
         $qb = $this->createQb();
 
         $naiveIdBatcher = new class() implements NaiveIdRangeBatcherInterface {
+            #[\Override]
             public function getSparseness(): int
             {
                 return 6;
             }
 
+            #[\Override]
             public function getBatches(int $batchSize = 100): iterable
             {
                 return [];
             }
 
+            #[\Override]
             public function getBatchCount(int $batchSize = 100): int
             {
                 return 0;
@@ -74,11 +80,13 @@ final class BatcherFactoryTest extends EntityManagerAwareTestCase
                 return 6;
             }
 
+            #[\Override]
             public function getBatches(int $batchSize = 100): iterable
             {
                 return [];
             }
 
+            #[\Override]
             public function getBatchCount(int $batchSize = 100): int
             {
                 return 0;

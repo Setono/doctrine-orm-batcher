@@ -12,5 +12,6 @@ interface CollectionBatcherInterface extends BatcherInterface
     /**
      * @return iterable<CollectionBatchInterface>
      */
+    #[\Override]
     public function getBatches(int $batchSize = 100): iterable;
 }

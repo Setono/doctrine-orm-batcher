@@ -27,16 +27,19 @@ abstract class Batch implements BatchInterface
         $this->parameters = $qb->getParameters()->toArray();
     }
 
+    #[\Override]
     public function getClass(): string
     {
         return $this->class;
     }
 
+    #[\Override]
     public function getDql(): string
     {
         return $this->dql;
     }
 
+    #[\Override]
     public function getParameters(): array
     {
         return $this->parameters;

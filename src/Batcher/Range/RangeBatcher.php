@@ -10,6 +10,7 @@ use Setono\DoctrineORMBatcher\Batcher\Batcher;
 
 abstract class RangeBatcher extends Batcher implements RangeBatcherInterface
 {
+    #[\Override]
     protected function getBatchableQueryBuilder(): QueryBuilder
     {
         $qb = $this->getQueryBuilder();

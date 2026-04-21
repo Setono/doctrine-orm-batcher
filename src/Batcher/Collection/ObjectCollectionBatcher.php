@@ -12,6 +12,7 @@ final class ObjectCollectionBatcher extends CollectionBatcher
     /**
      * @return iterable<CollectionBatchInterface>
      */
+    #[\Override]
     public function getBatches(int $batchSize = 100): iterable
     {
         $result = $this->getResult(null, $batchSize);

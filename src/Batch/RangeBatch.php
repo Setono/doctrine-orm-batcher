@@ -33,11 +33,13 @@ final class RangeBatch extends Batch implements RangeBatchInterface
         parent::__construct($qb);
     }
 
+    #[\Override]
     public function getLowerBound(): int
     {
         return $this->lowerBound;
     }
 
+    #[\Override]
     public function getUpperBound(): int
     {
         return $this->upperBound;

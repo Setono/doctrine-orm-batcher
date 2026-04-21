@@ -23,7 +23,7 @@ final class BatcherFactory implements BatcherFactoryInterface
         string $objectCollectionBatcherClass,
         string $idCollectionBatcherClass,
         string $naiveIdRangeBatcherClass,
-        string $idRangeBatcherClass
+        string $idRangeBatcherClass,
     ) {
         $this->objectCollectionBatcherClass = $objectCollectionBatcherClass;
         $this->idCollectionBatcherClass = $idCollectionBatcherClass;
@@ -31,27 +31,30 @@ final class BatcherFactory implements BatcherFactoryInterface
         $this->idRangeBatcherClass = $idRangeBatcherClass;
     }
 
+    #[\Override]
     public function createObjectCollectionBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',
-        bool $clearOnBatch = true
+        bool $clearOnBatch = true,
     ): CollectionBatcherInterface {
         return new $this->objectCollectionBatcherClass($qb, $identifier, $clearOnBatch);
     }
 
+    #[\Override]
     public function createIdCollectionBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',
-        bool $clearOnBatch = true
+        bool $clearOnBatch = true,
     ): CollectionBatcherInterface {
         return new $this->idCollectionBatcherClass($qb, $identifier, $clearOnBatch);
     }
 
+    #[\Override]
     public function createIdRangeBatcher(
         QueryBuilder $qb,
         string $identifier = 'id',
         bool $clearOnBatch = true,
-        int $sparsenessThreshold = 5
+        int $sparsenessThreshold = 5,
     ): RangeBatcherInterface {
         /** @var NaiveIdRangeBatcherInterface $naiveIdBatcher */
         $naiveIdBatcher = new $this->naiveIdRangeBatcherClass($qb, $identifier, $clearOnBatch);

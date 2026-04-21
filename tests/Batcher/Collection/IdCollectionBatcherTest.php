@@ -57,7 +57,7 @@ final class IdCollectionBatcherTest extends EntityManagerAwareTestCase
 
         $batches = $batcher->getBatches(10);
 
-        foreach ($batches as $idx => $batch) {
+        foreach ($batches as $batch) {
             foreach ($batch->getCollection() as $id) {
                 $this->assertArrayHasKey($id, $expectedIds);
 
